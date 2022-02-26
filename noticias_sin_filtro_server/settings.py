@@ -39,12 +39,16 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # VSF apps
+    'app.scraper.apps.ScraperConfig'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +88,7 @@ WSGI_APPLICATION = 'noticias_sin_filtro_server.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": env("SQL_ENGINE", default = "django.db.backends.sqlite3"),
-        "NAME": env("SQL_DATABASE", default = BASE_DIR / "db.sqlite3"),
+        "NAME": env("SQL_DATABASE", default = str(BASE_DIR / "db.sqlite3")),
         "USER": env("SQL_USER", default="user"),
         "PASSWORD": env("SQL_PASSWORD", default="password"),
         "HOST": env("SQL_HOST", default="localhost"),
