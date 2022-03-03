@@ -57,3 +57,24 @@ class ArticleHeadline(models.Model):
     source = models.CharField(
         max_length=30, choices=Source.choices, default=Source.UNKNOWN
     )
+
+    # Url to the actual article 
+    url = models.URLField(verbose_name="Full article url", max_length=300, unique=True)
+
+    @property
+    def as_dict(self):
+        """
+            Easily convert to dict
+        """
+        return {
+            "title" : self.title,
+            "date"  : self.date,
+            "categories" : self.categories,
+            "excerpt" : self.excerpt,
+            "image" : self.image,
+            "scraped_date" : self.scraped_date,
+            "source" : self.source
+        }
+
+    def __str__(self) -> str:
+        return f"Article(title = {self.title}, source = {self.source}, scraped_date = {self.scraped_date})"
