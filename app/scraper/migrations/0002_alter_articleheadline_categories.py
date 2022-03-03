@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scraper', '0001_initial'),
+        ("scraper", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='articleheadline',
-            name='categories',
-            field=models.ManyToManyField(to='scraper.ArticleCategory'),
+            model_name="articleheadline",
+            name="categories",
+            field=models.ManyToManyField(to="scraper.ArticleCategory"),
         ),
     ]

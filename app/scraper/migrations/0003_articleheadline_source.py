@@ -6,13 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scraper', '0002_alter_articleheadline_categories'),
+        ("scraper", "0002_alter_articleheadline_categories"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articleheadline',
-            name='source',
-            field=models.CharField(choices=[('la_patilla', 'La Patilla'), ('efecto_cocuyo', 'Efecto cocuyo'), ('unknown', 'unknown')], default='unknown', max_length=30),
+            model_name="articleheadline",
+            name="source",
+            field=models.CharField(
+                choices=[
+                    ("la_patilla", "La Patilla"),
+                    ("efecto_cocuyo", "Efecto cocuyo"),
+                    ("unknown", "unknown"),
+                ],
+                default="unknown",
+                max_length=30,
+            ),
         ),
     ]

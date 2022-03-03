@@ -7,27 +7,63 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ArticleCategory',
+            name="ArticleCategory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Category name')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=30, unique=True, verbose_name="Category name"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ArticleHeadline',
+            name="ArticleHeadline",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('scraped_date', models.DateTimeField(auto_created=True, auto_now_add=True, verbose_name='Scraped date')),
-                ('title', models.TextField(max_length=200, verbose_name='Title')),
-                ('date', models.DateTimeField(null=True, verbose_name='Publication name')),
-                ('excerpt', models.TextField(default='Excerpt', max_length=300, null=True)),
-                ('image', models.ImageField(upload_to='', verbose_name='Header image')),
-                ('categories', models.ManyToManyField(null=True, to='scraper.ArticleCategory')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "scraped_date",
+                    models.DateTimeField(
+                        auto_created=True,
+                        auto_now_add=True,
+                        verbose_name="Scraped date",
+                    ),
+                ),
+                ("title", models.TextField(max_length=200, verbose_name="Title")),
+                (
+                    "date",
+                    models.DateTimeField(null=True, verbose_name="Publication name"),
+                ),
+                (
+                    "excerpt",
+                    models.TextField(default="Excerpt", max_length=300, null=True),
+                ),
+                ("image", models.ImageField(upload_to="", verbose_name="Header image")),
+                (
+                    "categories",
+                    models.ManyToManyField(null=True, to="scraper.ArticleCategory"),
+                ),
             ],
         ),
     ]

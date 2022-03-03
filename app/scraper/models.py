@@ -3,29 +3,35 @@
     Every site scraper should produce an item that can be mapped to an object instance of 
     this model.
 """
+
 # Django imports
 from django.db import models
 
+
 class ArticleCategory(models.Model):
     """
-        A category to classify articles
+    A category to classify articles
     """
 
     # Category actual value
-    name = models.CharField(verbose_name="Category name", null=False, unique=True, max_length=30)
+    name = models.CharField(
+        verbose_name="Category name", null=False, unique=True, max_length=30
+    )
+
 
 class ArticleHeadline(models.Model):
     """
-        Represents a "headline" in the main feed for a news page
+    Represents a "headline" in the main feed for a news page
     """
 
     class Source(models.TextChoices):
         """
-            Possible sources of information, such like lapatilla, efectococuyo
-        """    
+        Possible sources of information, such like lapatilla, efectococuyo
+        """
+
         LA_PATILLA = ("la_patilla", "La Patilla")
         EFECTO_COCUYO = ("efecto_cocuyo", "Efecto cocuyo")
-        UNKNOWN  = ("unknown", "unknown")
+        UNKNOWN = ("unknown", "unknown")
 
     # Article title
     title = models.TextField(verbose_name="Title", null=False, max_length=200)
@@ -43,7 +49,11 @@ class ArticleHeadline(models.Model):
     image = models.ImageField(verbose_name="Header image")
 
     # Scraped date
-    scraped_date = models.DateTimeField(verbose_name="Scraped date", null=False, auto_created=True, auto_now_add=True)
+    scraped_date = models.DateTimeField(
+        verbose_name="Scraped date", null=False, auto_created=True, auto_now_add=True
+    )
 
     # Where did this heading come from
-    source = models.CharField(max_length=30, choices=Source.choices, default=Source.UNKNOWN)
+    source = models.CharField(
+        max_length=30, choices=Source.choices, default=Source.UNKNOWN
+    )
