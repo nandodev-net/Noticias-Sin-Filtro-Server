@@ -16,12 +16,12 @@ class Scraper:
     """
 
     scraper_to_main_page = {
-        ArticleHeadline.Source.LA_PATILLA.value[0] : "https://www.lapatilla.com",
-        ArticleHeadline.Source.EFECTO_COCUYO.value[0] : "https://efectococuyo.com"
+        ArticleHeadline.Source.LA_PATILLA.value : "https://www.lapatilla.com",
+        ArticleHeadline.Source.EFECTO_COCUYO.value : "https://efectococuyo.com"
     }
 
     scrapy_project_name = "default"
-    scrapy_crawler_name = "vsf_crawler"
+    scrapy_crawler_name = "la_patilla"
 
     def __init__(self, scrapyd : ScrapydAPI):
         self._scrapyd = scrapyd        
@@ -34,12 +34,14 @@ class Scraper:
         """
 
         # Sanity check scrapers
-        invalid_names = (name for name in scraper_names if name not in self._valid_scrapers())
+        invalid_names = [name for name in scraper_names if name not in self._valid_scrapers()]
         if invalid_names:
             raise ValueError(f"The following scrapers are not valid scrapers: {invalid_names}. Choices are: {self._valid_scrapers()}")
 
+        print(self.scraper_to_main_page)
+
         # Get url for this scraper
-        urls = [self.scraper_to_main_page[x] for x in scraper_names]
+        urls = [self.scraper_to_main_page[x] for x in scraper_names] # type: ignore
 
         # Config settings
         settings = {
