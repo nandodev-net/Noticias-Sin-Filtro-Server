@@ -21,7 +21,6 @@ class Scraper:
     }
 
     scrapy_project_name = "default"
-    scrapy_crawler_name = "la_patilla"
 
     def __init__(self, scrapyd : ScrapydAPI):
         self._scrapyd = scrapyd        
@@ -33,32 +32,34 @@ class Scraper:
                 * scraper_names : `[str]` = list scrapers to trigger a scraping
         """
 
+        # If nothing to do, just end
+        if not scraper_names: return []
+
         # Sanity check scrapers
         invalid_names = [name for name in scraper_names if name not in self._valid_scrapers()]
         if invalid_names:
             raise ValueError(f"The following scrapers are not valid scrapers: {invalid_names}. Choices are: {self._valid_scrapers()}")
 
-        print(self.scraper_to_main_page)
-
-        # Get url for this scraper
-        urls = [self.scraper_to_main_page[x] for x in scraper_names] # type: ignore
-
         # Config settings
         settings = {
-            'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+            'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
         }
 
         # Parse domain 
-        domains = [urlparse(url).netloc for url in urls]
+        tasks = []
+        for scraper_name in scraper_names:
+            url = self.scraper_to_main_page[scraper_name] # type: ignore
+            domain = urlparse(url).netloc
 
-        tasks = [
-            self._scrapyd.schedule(
-                self.scrapy_project_name, 
-                self.scrapy_crawler_name, 
-                url=url, domain=domain, 
-                settings=settings)
-            for (url, domain) in zip(urls, domains)
-        ]
+            settings['source'] = scraper_name
+
+            tasks.append(
+                self._scrapyd.schedule(
+                    self.scrapy_project_name, 
+                    scraper_name, 
+                    url=url, domain=domain, 
+                    settings=settings)
+                )
 
         return tasks
     

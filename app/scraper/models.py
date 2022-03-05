@@ -18,6 +18,8 @@ class ArticleCategory(models.Model):
         verbose_name="Category name", null=False, unique=True, max_length=30
     )
 
+    def __str__(self) -> str:
+        return self.name
 
 class ArticleHeadline(models.Model):
     """
