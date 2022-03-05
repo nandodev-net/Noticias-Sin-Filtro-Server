@@ -1,20 +1,58 @@
-import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+"""
+    Spider to scrape data from the main feed in la patilla
+"""
+# Local imports
+from typing import Iterable
+from vsf_crawler.data_schemes.la_patilla_scraped_data import LaPatillaScrapedData
+from app.scraper.models import ArticleHeadline
 
+# Third party imports
+from scrapy import Spider
+from scrapy.http import Response
 
-class LaPatillaSpider(CrawlSpider):
-    name = 'la_patilla'
+# Python imports
+import logging
+import datetime
+from pytz import utc
+
+class LaPatillaSpider(Spider):
+    name = ArticleHeadline.Source.LA_PATILLA.value #type: ignore
     allowed_domains = ['https://www.lapatilla.com']
-    start_urls = ['http://https://www.lapatilla.com/']
+    start_urls = ['https://www.lapatilla.com']
 
-    rules = (
-        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
-    )
 
-    def parse_item(self, response):
-        item = {}
-        #item['domain_id'] = response.xpath('//input[@id="sid"]/@value').get()
-        #item['name'] = response.xpath('//div[@id="name"]').get()
-        #item['description'] = response.xpath('//div[@id="description"]').get()
-        return item
+    def parse(self, response : Response) -> Iterable[LaPatillaScrapedData]:
+        """
+            Specifically made to parse "la patilla" main page
+        """
+        assert self.name, "Spider missconfigured"
+        thumbnails = response.css(".homenews-container > .row > div")
+
+        for thumbnail in thumbnails: # type: ignore
+            try: # type: ignore
+                category = thumbnail.css("div > .cat-name-time > .cat-name ::text").get()
+                date = thumbnail.css("div > .cat-name-time > .post-date ::text").get().strip()
+                title = thumbnail.css("div > .post-title > a > h4 ::text").get()
+                excerpt = thumbnail.css("div > .home-post-excerpt ::text").get().strip()
+                
+                # Parse url
+                url = thumbnail.css("div > .post-img-sec > a::attr(href)").extract()
+                url = url[0] if url else url
+
+                # Parse img url
+                img = thumbnail.css("div > .post-img-sec > .post-thumbnail > img::attr(src)").extract()
+                img = img[0] if img else img
+
+                item = LaPatillaScrapedData(
+                    title=title, 
+                    excerpt=excerpt, 
+                    url=url,
+                    date=date,
+                    scraped_date=datetime.datetime.now(tz=utc),
+                    categories=[category],
+                    img = img, 
+                    source=self.name #type: ignore
+                    )
+            except Exception as e:
+                logging.error(f"Error creating new item from response: {str(e)}")
+            yield item        

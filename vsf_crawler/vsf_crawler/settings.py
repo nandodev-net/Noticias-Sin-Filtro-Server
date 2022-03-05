@@ -7,6 +7,20 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+# -- < Django integration > --------------------------------------------------
+
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(".")))
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'noticias_sin_filtro_server.settings'
+
+import django 
+django.setup()
+
+# ----------------------------------------------------------------------------
+
 BOT_NAME = 'vsf_crawler'
 
 SPIDER_MODULES = ['vsf_crawler.spiders']
@@ -18,7 +32,8 @@ NEWSPIDER_MODULE = 'vsf_crawler.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
-
+LOG_FILE="log.txt"
+LOG_LEVEL="ERROR"
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -62,9 +77,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'vsf_crawler.pipelines.VsfCrawlerPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'vsf_crawler.pipelines.VsfCrawlerPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -87,14 +102,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# -- < Django integration > --------------------------------------------------
 
-import os
-import sys
-
-sys.path.append(os.path.dirname(os.path.abspath(".")))
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'vsf_crawler.settings'
-
-import django 
-django.setup()
