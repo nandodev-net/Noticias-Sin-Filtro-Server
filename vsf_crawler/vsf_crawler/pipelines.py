@@ -3,7 +3,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-# Python imports 
+# Python imports
 from typing import Dict, List, Any
 import logging
 
@@ -43,10 +43,10 @@ class VsfCrawlerPipeline:
         except Exception as e:
             logging.error(f"Error creating ArticleHeadline object: {str(e)}")
 
-        return item 
+        return item
 
     def close_spider(self, spider : Spider):
-        
+
         # If no item gathered, just end
         if not self.items:
             return
@@ -67,7 +67,7 @@ class VsfCrawlerPipeline:
 
             assert headline
             assert category_list != None
-            
+
             # Do nothing if no category list
             if not category_list: continue
 
@@ -76,4 +76,3 @@ class VsfCrawlerPipeline:
             except Exception as e:
                 logging.error(f"Could not set category list. Error: {e}")
 
-            
