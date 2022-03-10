@@ -20,7 +20,4 @@ from django.conf.urls import include
 # Local imports
 from app.scraper import urls as scraper_urls
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(scraper_urls))
-]
+urlpatterns = [path("admin/", admin.site.urls), path("", include(scraper_urls))]

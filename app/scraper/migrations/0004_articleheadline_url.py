@@ -6,14 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scraper', '0003_articleheadline_source'),
+        ("scraper", "0003_articleheadline_source"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articleheadline',
-            name='url',
-            field=models.URLField(default='https://www.nowhere.com', max_length=300, unique=True, verbose_name='Full article url'),
+            model_name="articleheadline",
+            name="url",
+            field=models.URLField(
+                default="https://www.nowhere.com",
+                max_length=300,
+                unique=True,
+                verbose_name="Full article url",
+            ),
             preserve_default=False,
         ),
     ]

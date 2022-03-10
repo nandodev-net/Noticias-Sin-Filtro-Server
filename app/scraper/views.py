@@ -13,56 +13,53 @@ from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-# External imports 
+# External imports
 from scrapyd_api import ScrapydAPI
 
-# Connecting to scrapyd service
-scrapyd = ScrapydAPI("http://localhost:6800") # TODO move to environment variable
- 
 
-@method_decorator(csrf_exempt, name='dispatch') # TODO debug only, delete later
+@method_decorator(csrf_exempt, name="dispatch")  # TODO debug only, delete later
 class ScrapingManagerView(View):
     """
-        View to manage a scraping process, allowing you to check 
-        the scraper status and trigger a new scraping process
+    View to manage a scraping process, allowing you to check
+    the scraper status and trigger a new scraping process
     """
 
-    def post(self, request : HttpRequest) -> HttpResponse:
+    def post(self, request: HttpRequest) -> HttpResponse:
 
         # Get scraper to trigger
         scraper = request.POST.get("scraper", None)
         print(request.POST.dict())
         if not scraper:
-            return JsonResponse({"error" : "missing 'scraper' argument"})
+            return JsonResponse({"error": "missing 'scraper' argument"})
 
         # Create scraper
-        scraper_client = Scraper(scrapyd=scrapyd)
+        scraper_client = Scraper()
 
         # Scrape and retrieve tasks ids
         try:
             task_ids = scraper_client.scrape([scraper])
-        except ValueError as e: # If couldn't scrape, maybe we're using the wrong scraper type
-            return JsonResponse({"status" : "error", "msg" : str(e)})
+        except ValueError as e:  # If couldn't scrape, maybe we're using the wrong scraper type
+            return JsonResponse({"status": "error", "msg": str(e)})
 
-        return JsonResponse({"status" : "started", "ids" : task_ids})
+        return JsonResponse({"status": "started", "ids": task_ids})
 
-    def get(self, request : HttpRequest) -> HttpResponse:
+    def get(self, request: HttpRequest) -> HttpResponse:
         # Check status for some scraper process
         task_id = request.GET.get("task_id", None)
 
         # Check if task_id was provided
         if not task_id:
-            return JsonResponse({"error" : "missing task_id argument"})
+            return JsonResponse({"error": "missing task_id argument"})
 
         # Check current status
-        status = scrapyd.job_status('default', task_id)
+        status = scrapyd.job_status("default", task_id)
 
-        return JsonResponse({"status" : status})
+        return JsonResponse({"status": status})
 
 
-def _is_valid_url(url : str) -> bool:
+def _is_valid_url(url: str) -> bool:
     """
-        Check if the given url is a valid one
+    Check if the given url is a valid one
     """
 
     validate = URLValidator()

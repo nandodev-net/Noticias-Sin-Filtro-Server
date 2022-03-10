@@ -21,6 +21,7 @@ class ArticleCategory(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class ArticleHeadline(models.Model):
     """
     Represents a "headline" in the main feed for a news page
@@ -60,22 +61,22 @@ class ArticleHeadline(models.Model):
         max_length=30, choices=Source.choices, default=Source.UNKNOWN
     )
 
-    # Url to the actual article 
+    # Url to the actual article
     url = models.URLField(verbose_name="Full article url", max_length=300, unique=True)
 
     @property
     def as_dict(self):
         """
-            Easily convert to dict
+        Easily convert to dict
         """
         return {
-            "title" : self.title,
-            "date"  : self.date,
-            "categories" : self.categories,
-            "excerpt" : self.excerpt,
-            "image" : self.image,
-            "scraped_date" : self.scraped_date,
-            "source" : self.source
+            "title": self.title,
+            "date": self.date,
+            "categories": self.categories,
+            "excerpt": self.excerpt,
+            "image": self.image,
+            "scraped_date": self.scraped_date,
+            "source": self.source,
         }
 
     def __str__(self) -> str:
