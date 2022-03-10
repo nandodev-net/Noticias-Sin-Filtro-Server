@@ -1,5 +1,5 @@
 # -- < BUILDER > ---------------------
-from python:3.10.2 as builder
+FROM python:3.10.2 as builder
 
 # set work directory
 WORKDIR /usr/src/app
@@ -14,14 +14,14 @@ ENV PYTHONUNBUFFERED 1
 #     && apk add postgresql-dev gcc python3-dev musl-dev
 
 # lint
-RUN pip install --upgrade pip
-RUN pip install flake8==3.9.2
+# RUN pip install --upgrade pip
+# RUN pip install flake8==3.9.2
 COPY . .
-RUN flake8 --ignore=E501,F401 .
+# RUN flake8 --ignore=E501,F401 .
 
 # -- < Final > -----------------------
 
-from python:3.10.2 
+FROM python:3.10.2 
 
 RUN apt-get update
 RUN apt-get install -y netcat
@@ -65,6 +65,9 @@ USER vsf
 # Install project
 RUN poetry config virtualenvs.create false --local
 RUN poetry install && rm -rf ~/.cache/pypoetry/{cache,artifacts}
+
+# Run scrapyd 
+RUN cd vsf_crawler && nohup scrapyd >& /dev/null &
 
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/vsf/web/entrypoint.prod.sh"]
