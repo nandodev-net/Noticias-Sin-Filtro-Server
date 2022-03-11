@@ -66,8 +66,9 @@ USER vsf
 RUN poetry config virtualenvs.create false --local
 RUN poetry install && rm -rf ~/.cache/pypoetry/{cache,artifacts}
 
-# Run scrapyd 
-RUN cd vsf_crawler && nohup scrapyd >& /dev/null &
+# Add local executables 
+ENV PATH=${PATH}:$HOME/.local/bin
+
 
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/vsf/web/entrypoint.prod.sh"]
