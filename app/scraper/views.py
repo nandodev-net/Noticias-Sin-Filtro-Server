@@ -3,7 +3,7 @@
 """
 # Local imports
 from noticias_sin_filtro_server import settings
-from app.scraper.scraper import Scraper
+from app.scraper.scraper import Scraper, scrapyd
 
 # Django imports
 from django.forms import ValidationError
