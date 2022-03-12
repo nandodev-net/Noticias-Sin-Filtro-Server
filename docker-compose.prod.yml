@@ -29,6 +29,30 @@ services:
       - 1337:80
     depends_on:
       - web
+  redis:
+    image: redis:alpine
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: celery -A noticias_sin_filtro_server worker -l info -s /tmp/celerybeat-schedule
+    volumes:
+      - ./:/home/vsf/web
+    env_file:
+      - .env.prod
+    depends_on:
+      - redis
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: celery -A noticias_sin_filtro_server beat -l info -s /tmp/celerybeat-schedule
+    volumes:
+      - ./:/home/vsf/web
+    env_file:
+      - .env.prod
+    depends_on:
+      - redis
 
 volumes:
   postgres_data:

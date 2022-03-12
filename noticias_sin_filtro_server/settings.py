@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+import noticias_sin_filtro_server.tasks as tasks
+
 # -- < Init environment variables handler > -------------
 import environ
 
@@ -89,12 +91,12 @@ WSGI_APPLICATION = "noticias_sin_filtro_server.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        "NAME": env("SQL_DATABASE", default=str(BASE_DIR / "db.sqlite3")),
-        "USER": env("SQL_USER", default="user"),
-        "PASSWORD": env("SQL_PASSWORD", default="password"),
-        "HOST": env("SQL_HOST", default="localhost"),
-        "PORT": env("SQL_PORT", default="5432"),
+        "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"), # type: ignore
+        "NAME": env("SQL_DATABASE", default=str(BASE_DIR / "db.sqlite3")), # type: ignore
+        "USER": env("SQL_USER", default="user"), # type: ignore
+        "PASSWORD": env("SQL_PASSWORD", default="password"), # type: ignore
+        "HOST": env("SQL_HOST", default="localhost"), # type: ignore
+        "PORT": env("SQL_PORT", default="5432"), # type: ignore
     }
 }
 
@@ -139,3 +141,18 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# -- < Celery configurations > ------------------------------------------
+
+from celery.schedules import crontab
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task" : {
+        "task" : "noticias_sin_filtro_server.tasks.sample_task",
+        "schedule" : crontab(minute="*/1")
+
+    }
+}
