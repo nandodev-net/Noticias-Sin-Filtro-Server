@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # VSF apps
     "app.scraper.apps.ScraperConfig",
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
