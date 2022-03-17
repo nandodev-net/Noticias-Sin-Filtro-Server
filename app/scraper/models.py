@@ -40,7 +40,7 @@ class ArticleHeadline(models.Model):
     title = models.TextField(verbose_name="Title", null=False, max_length=200)
 
     # Publication date
-    date = models.DateTimeField(verbose_name="Publication name", null=True)
+    datetime = models.DateTimeField(verbose_name="Publication name", null=True)
 
     # Possible categories
     categories = models.ManyToManyField(to=ArticleCategory)
@@ -49,7 +49,7 @@ class ArticleHeadline(models.Model):
     excerpt = models.TextField(default="Excerpt", null=True, max_length=300)
 
     # Main image for this headline
-    image = models.ImageField(verbose_name="Header image")
+    image_url = models.URLField(verbose_name="Image source", max_length=300)
 
     # Scraped date
     scraped_date = models.DateTimeField(
@@ -64,6 +64,9 @@ class ArticleHeadline(models.Model):
     # Url to the actual article
     url = models.URLField(verbose_name="Full article url", max_length=300, unique=True)
 
+    # If this article was relevant in its original site
+    relevance = models.BooleanField(verbose_name= "Relevance", default=None, null=True)
+
     @property
     def as_dict(self):
         """
@@ -71,10 +74,10 @@ class ArticleHeadline(models.Model):
         """
         return {
             "title": self.title,
-            "date": self.date,
+            "date": self.datetime,
             "categories": self.categories,
             "excerpt": self.excerpt,
-            "image": self.image,
+            "image": self.image_url,
             "scraped_date": self.scraped_date,
             "source": self.source,
         }

@@ -51,7 +51,8 @@ class LaPatillaSpider(Spider):
                     scraped_date=datetime.datetime.now(tz=utc),
                     categories=[category],
                     img = img, 
-                    source=self.name #type: ignore
+                    source=self.name, #type: ignore
+                    relevance = category == 'Destacados'
                     )
             except Exception as e:
                 logging.error(f"Error creating new item from response: {str(e)}")

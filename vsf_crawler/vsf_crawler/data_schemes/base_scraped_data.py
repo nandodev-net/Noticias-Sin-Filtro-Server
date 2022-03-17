@@ -8,7 +8,7 @@ from app.scraper.models import ArticleCategory, ArticleHeadline
 
 # Python imports
 import dataclasses
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 import datetime
 
 # Note that the use of dataclasses here is not optional since 
@@ -29,6 +29,7 @@ class BaseDataScheme:
     img : str
     source : str
     scraped_date : datetime.datetime
+    relevance : Optional[bool] = None
     categories : List[str] = dataclasses.field(default_factory=list)
 
     def as_headline(self) -> Tuple[ArticleHeadline, List[ArticleCategory]]:
@@ -49,9 +50,11 @@ class BaseDataScheme:
             title   = self.title,
             excerpt = self.excerpt,
             url     = self.url,
-            date    = None, # TODO Still don't know how to map dates in this site 
+            datetime    = None, # TODO Still don't know how to map dates in this site 
             scraped_date = self.scraped_date,
-            source  = self.source 
+            source  = self.source, 
+            image_url   = self.img,
+            relevance = self.relevance
         )
         
         return headline, categories
