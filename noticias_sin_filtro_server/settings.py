@@ -14,6 +14,14 @@ from pathlib import Path
 
 import noticias_sin_filtro_server.tasks as tasks
 
+# -- < App version > ------------------------------------
+VERSION = "0.0.1"
+
+
+
+
+
+
 # -- < Init environment variables handler > -------------
 import environ
 
@@ -166,6 +174,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 50   
+    'PAGE_SIZE': 50,
+    'DEFAULT_VERSIONING_CLASS':'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_VERSION' : "v0.0.1",
+    'ALLOWED_VERSIONS' : ['v0.0.1'],
+
+
 }
 
