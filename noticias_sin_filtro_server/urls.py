@@ -21,19 +21,11 @@ from django.conf.urls import include
 
 # Local imports
 from app.scraper import urls as scraper_urls
-from app.scraper.serializers import CategoryViewSet, HeadlineViewSet, MediaSiteViewSet
+from noticias_sin_filtro_server.routers.v0_0_1 import urls as urls_v001
 
-# Third party imports
-from rest_framework import routers, serializers, viewsets
-
-
-router = routers.DefaultRouter()
-router.register(r'headlines', HeadlineViewSet)
-router.register(r'categories', CategoryViewSet)
-router.register(r'media_sites', MediaSiteViewSet, basename='media_sites')
 
 urlpatterns = [
     path("admin/", admin.site.urls), path("", include(scraper_urls)),
-    path('', include(router.urls)),
+    path('v0.0.1/', include(urls_v001)),
     path('api-auth/', include('rest_framework.urls')),
     ]

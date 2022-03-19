@@ -14,10 +14,9 @@ from pathlib import Path
 
 import noticias_sin_filtro_server.tasks as tasks
 
-# -- < App version > ------------------------------------
+# -- < App info > ------------------------------------
 VERSION = "0.0.1"
-
-
+DATE_FORMAT = "%y-%m-%d:%H:%M:%S"
 
 
 
@@ -178,7 +177,5 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS':'rest_framework.versioning.NamespaceVersioning',
     'DEFAULT_VERSION' : "v0.0.1",
     'ALLOWED_VERSIONS' : ['v0.0.1'],
-
-
 }
 
