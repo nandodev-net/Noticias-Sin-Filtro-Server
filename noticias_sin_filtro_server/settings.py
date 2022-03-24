@@ -18,8 +18,21 @@ import noticias_sin_filtro_server.tasks as tasks
 VERSION = "0.0.1"
 DATE_FORMAT = "%y-%m-%d:%H:%M:%S"
 
+# -- < App configuration > ---------------------------
+# Compatible client's versions. A version not specified in one of the 
+# following variables will be considered invalid, and will raise an error
 
+# LAST_VERSION is supported, is the current app version
+LAST_VERSION = "v0.0.1"
 
+# versions in COMPATIBLE_UPGRADABLE are supported, but they will issue an update notification
+COMPATIBLE_UPGRADABLE = []
+
+# Versions in DEPRECATED_VERSIONS are not supported, 
+DEPRECATED_VERSIONS = []
+
+# Check that versions are disjoint 
+assert len({LAST_VERSION, *COMPATIBLE_UPGRADABLE, *DEPRECATED_VERSIONS}) == (1 + len(COMPATIBLE_UPGRADABLE) + len(DEPRECATED_VERSIONS)), "Versions should be unique"
 
 # -- < Init environment variables handler > -------------
 import environ
