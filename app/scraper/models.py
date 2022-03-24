@@ -65,7 +65,7 @@ class ArticleHeadline(models.Model):
     url = models.URLField(verbose_name="Full article url", max_length=300, unique=True)
 
     # If this article was relevant in its original site
-    relevance = models.BooleanField(verbose_name= "Relevance", default=None, null=True)
+    relevance = models.BooleanField(verbose_name="Relevance", default=None, null=True)
 
     @property
     def as_dict(self):

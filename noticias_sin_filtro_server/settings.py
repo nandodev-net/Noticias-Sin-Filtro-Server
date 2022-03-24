@@ -19,7 +19,7 @@ VERSION = "0.0.1"
 DATE_FORMAT = "%y-%m-%d:%H:%M:%S"
 
 # -- < App configuration > ---------------------------
-# Compatible client's versions. A version not specified in one of the 
+# Compatible client's versions. A version not specified in one of the
 # following variables will be considered invalid, and will raise an error
 
 # LAST_VERSION is supported, is the current app version
@@ -28,11 +28,13 @@ LAST_VERSION = "v0.0.1"
 # versions in COMPATIBLE_UPGRADABLE are supported, but they will issue an update notification
 COMPATIBLE_UPGRADABLE = []
 
-# Versions in DEPRECATED_VERSIONS are not supported, 
+# Versions in DEPRECATED_VERSIONS are not supported,
 DEPRECATED_VERSIONS = []
 
-# Check that versions are disjoint 
-assert len({LAST_VERSION, *COMPATIBLE_UPGRADABLE, *DEPRECATED_VERSIONS}) == (1 + len(COMPATIBLE_UPGRADABLE) + len(DEPRECATED_VERSIONS)), "Versions should be unique"
+# Check that versions are disjoint
+assert len({LAST_VERSION, *COMPATIBLE_UPGRADABLE, *DEPRECATED_VERSIONS}) == (
+    1 + len(COMPATIBLE_UPGRADABLE) + len(DEPRECATED_VERSIONS)
+), "Versions should be unique"
 
 # -- < Init environment variables handler > -------------
 import environ
@@ -58,8 +60,8 @@ DEBUG = int(env("DEBUG", default=1))  # type: ignore
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")  # type: ignore
 
 # Scrapy server
-SCRAPY_HOST = env("SCRAPY_HOST", default="http://localhost") #type: ignore 
-SCRAPY_PORT = env("SCRAPY_PORT", default="6800") # type: ignore
+SCRAPY_HOST = env("SCRAPY_HOST", default="http://localhost")  # type: ignore
+SCRAPY_PORT = env("SCRAPY_PORT", default="6800")  # type: ignore
 
 # Application definition
 
@@ -73,7 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # VSF apps
     "app.scraper.apps.ScraperConfig",
-    "rest_framework"
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -112,12 +114,12 @@ WSGI_APPLICATION = "noticias_sin_filtro_server.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"), # type: ignore
-        "NAME": env("SQL_DATABASE", default=str(BASE_DIR / "db.sqlite3")), # type: ignore
-        "USER": env("SQL_USER", default="user"), # type: ignore
-        "PASSWORD": env("SQL_PASSWORD", default="password"), # type: ignore
-        "HOST": env("SQL_HOST", default="localhost"), # type: ignore
-        "PORT": env("SQL_PORT", default="5432"), # type: ignore
+        "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"),  # type: ignore
+        "NAME": env("SQL_DATABASE", default=str(BASE_DIR / "db.sqlite3")),  # type: ignore
+        "USER": env("SQL_USER", default="user"),  # type: ignore
+        "PASSWORD": env("SQL_PASSWORD", default="password"),  # type: ignore
+        "HOST": env("SQL_HOST", default="localhost"),  # type: ignore
+        "PORT": env("SQL_PORT", default="5432"),  # type: ignore
     }
 }
 
@@ -171,10 +173,9 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 CELERY_BEAT_SCHEDULE = {
-    "sample_task" : {
-        "task" : "noticias_sin_filtro_server.tasks.sample_task",
-        "schedule" : crontab(minute="*/1")
-
+    "sample_task": {
+        "task": "noticias_sin_filtro_server.tasks.sample_task",
+        "schedule": crontab(minute="*/1"),
     }
 }
 
@@ -182,13 +183,12 @@ CELERY_BEAT_SCHEDULE = {
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 50,
-    'DEFAULT_VERSIONING_CLASS':'rest_framework.versioning.NamespaceVersioning',
-    'DEFAULT_VERSION' : "v0.0.1",
-    'ALLOWED_VERSIONS' : ['v0.0.1'],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 50,
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
+    "DEFAULT_VERSION": "v0.0.1",
+    "ALLOWED_VERSIONS": ["v0.0.1"],
 }
-

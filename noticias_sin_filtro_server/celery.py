@@ -13,4 +13,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "noticias_sin_filtro_server.sett
 app = Celery("noticias_sin_filtro_server")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
-

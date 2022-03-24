@@ -9,9 +9,11 @@ from scrapyd_api import ScrapydAPI
 
 # Local imports
 from app.scraper.models import ArticleHeadline
-import  noticias_sin_filtro_server.settings as settings
+import noticias_sin_filtro_server.settings as settings
 
-scrapyd = ScrapydAPI(f"{settings.SCRAPY_HOST}:{settings.SCRAPY_PORT}")  # TODO move to environment variable
+scrapyd = ScrapydAPI(
+    f"{settings.SCRAPY_HOST}:{settings.SCRAPY_PORT}"
+)  # TODO move to environment variable
 
 
 class Scraper:

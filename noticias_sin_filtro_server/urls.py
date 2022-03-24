@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# Django imports 
+# Django imports
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -25,8 +25,9 @@ from noticias_sin_filtro_server.routers.v0_0_1 import urls as urls_v001
 from noticias_sin_filtro_server.versioning.viewsets import KillSwitchViewSet
 
 urlpatterns = [
-    path("admin/", admin.site.urls), path("", include(scraper_urls)),
-    path("version/", view=KillSwitchViewSet.as_view({"get" : "get"})),
-    path('v0.0.1/', include(urls_v001)),
-    path('api-auth/', include('rest_framework.urls')),
-    ]
+    path("admin/", admin.site.urls),
+    path("", include(scraper_urls)),
+    path("version/", view=KillSwitchViewSet.as_view({"get": "get"})),
+    path("v0.0.1/", include(urls_v001)),
+    path("api-auth/", include("rest_framework.urls")),
+]
