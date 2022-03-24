@@ -13,3 +13,4 @@ class LaPatillaScrapedData(BaseDataScheme):
         Data scheme for la patilla
     """
     
+    

@@ -10,6 +10,7 @@ from app.scraper.models import ArticleCategory, ArticleHeadline
 import dataclasses
 from typing import List, Optional, Tuple
 import datetime
+import parsedatetime
 
 # Note that the use of dataclasses here is not optional since 
 # scrapy requires to have an Item-like interface, which is provided 
@@ -50,7 +51,7 @@ class BaseDataScheme:
             title   = self.title,
             excerpt = self.excerpt,
             url     = self.url,
-            datetime    = None, # TODO Still don't know how to map dates in this site 
+            datetime    = self._map_datetime(self.date), # TODO Still don't know how to map dates in this site 
             scraped_date = self.scraped_date,
             source  = self.source, 
             image_url   = self.img,
@@ -65,3 +66,18 @@ class BaseDataScheme:
         """
 
         return categories
+
+    def _map_datetime(self, datetime_str : str) -> Optional[datetime.datetime]:
+        """
+            Map from a date in a string to an actual datetime, useful since most sites 
+            have dates in natural language and might need a way to map it to a python object
+        """
+        constants = parsedatetime.Constants(localeID='es', usePyICU=False)
+        calendar = parsedatetime.Calendar(constants)
+        result, code = calendar.parse(datetime_str)
+
+        # code == 0 means it could not parse the given date
+        if code == 0:
+            return None
+
+        return datetime.datetime(*result[:6]) # some magic words
