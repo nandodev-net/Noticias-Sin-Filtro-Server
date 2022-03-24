@@ -43,7 +43,9 @@ class HeadlineViewSet(viewsets.ModelViewSet):
         """
             Filter response by:
                 + media_sites: [str] = sources that should be included in this query. Defaults to all.
-                + categories: [str] = categories that should be included in this query. Defaults to all.
+                + categories: [str] = categories that should be included in this query, it will
+                                      return headlines such that they have at the least one of the categories listed
+                                      here. Defaults to all.
                 + relevance: Optional[bool] = if delivered news should be all relevant (true), 
                     non relevant (false), or any (None). Defaults to None.
                 + start_date: datetime = start date for retrieved news. Format: YYYY-mm-dd:HH:MM:ss
@@ -65,7 +67,7 @@ class HeadlineViewSet(viewsets.ModelViewSet):
 
         if (categories := params.getlist("categories[]")) not in [None, []]: 
             # TODO hacer esta query
-            qs = qs.prefetch_related(Prefetch('categories', ArticleCategory.objects.filter(name__in=categories)))
+            qs = qs.filter(categories__name__in = categories)
 
         if (relevance := params.get("relevance")) != None:
             relevance = relevance.to_lowercase() == 'true' # type: ignore
