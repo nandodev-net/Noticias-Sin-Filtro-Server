@@ -2,7 +2,6 @@
     Some monitoring views that might be used to manually trigger a scraping or check the scraping status
 """
 # Local imports
-from noticias_sin_filtro_server import settings
 from app.scraper.scraper import Scraper, scrapyd
 
 # Django imports
@@ -12,9 +11,6 @@ from django.core.validators import URLValidator
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-
-# External imports
-from scrapyd_api import ScrapydAPI
 
 
 @method_decorator(csrf_exempt, name="dispatch")  # TODO debug only, delete later
@@ -39,6 +35,8 @@ class ScrapingManagerView(View):
         try:
             task_ids = scraper_client.scrape([scraper])
         except ValueError as e:  # If couldn't scrape, maybe we're using the wrong scraper type
+            import logging
+            logging.error("Could not start scraping")
             return JsonResponse({"status": "error", "msg": str(e)})
 
         return JsonResponse({"status": "started", "ids": task_ids})
