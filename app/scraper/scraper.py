@@ -12,7 +12,7 @@ from app.scraper.models import ArticleHeadline
 import noticias_sin_filtro_server.settings as settings
 
 scrapyd = ScrapydAPI(
-    f"{settings.SCRAPY_HOST}:{settings.SCRAPY_PORT}"
+    f"http://{settings.SCRAPY_HOST}:{settings.SCRAPY_PORT}"
 )  # TODO move to environment variable
 
 
