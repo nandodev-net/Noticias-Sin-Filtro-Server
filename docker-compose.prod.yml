@@ -14,6 +14,19 @@ services:
       - ./.env.prod
     depends_on:
       - db
+      - scrapyd
+  scrapyd:
+    build: 
+      context: .
+      dockerfile: scrapyd/Dockerfile
+    ports:
+      - "6800:6800"
+    volumes:
+      - ./data:/var/lib/scrapyd
+    hostname: scrapyd
+    env_file:
+      - ./.env.prod
+    restart: unless-stopped
   db:
     image: postgres:13.0-alpine
     volumes:
@@ -42,17 +55,19 @@ services:
       - .env.prod
     depends_on:
       - redis
+    restart: unless-stopped
   celery-beat:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: celery -A noticias_sin_filtro_server beat -l info -s /tmp/celerybeat-schedule
+    command: sleep 60 && celery -A noticias_sin_filtro_server beat -l info -s /tmp/celerybeat-schedule
     volumes:
       - ./:/home/vsf/web
     env_file:
       - .env.prod
     depends_on:
       - redis
+    restart: unless-stopped
 
 volumes:
   postgres_data:

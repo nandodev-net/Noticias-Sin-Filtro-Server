@@ -174,7 +174,7 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
-        "task": "noticias_sin_filtro_server.tasks.sample_task",
+        "task": "noticias_sin_filtro_server.tasks.scraper_task",
         "schedule": crontab(minute="*/1"),
     }
 }

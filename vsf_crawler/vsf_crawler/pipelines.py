@@ -58,7 +58,7 @@ class VsfCrawlerPipeline:
 
         try:
             # Create new articles
-            ArticleHeadline.objects.bulk_create(headlines)
+            ArticleHeadline.objects.bulk_create(headlines, ignore_conflicts=True)
         except Exception as e:
             logging.error(f"Could not create article headline objects. Error: {str(e)}")
 
