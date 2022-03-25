@@ -15,7 +15,7 @@ class ArticleCategory(models.Model):
 
     # Category actual value
     name = models.CharField(
-        verbose_name="Category name", null=False, unique=True, max_length=30
+        verbose_name="Category name", null=False, unique=True, max_length=200
     )
 
     def __str__(self) -> str:
@@ -58,7 +58,7 @@ class ArticleHeadline(models.Model):
 
     # Where did this heading come from
     source = models.CharField(
-        max_length=30, choices=Source.choices, default=Source.UNKNOWN
+        max_length=100, choices=Source.choices, default=Source.UNKNOWN
     )
 
     # Url to the actual article
