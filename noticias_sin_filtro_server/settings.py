@@ -58,7 +58,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = int(env("DEBUG", default=1))  # type: ignore
 
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")  # type: ignore
-
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", default="").split(" ") or [] # type: ignore
 # Scrapy server
 SCRAPY_HOST = env("SCRAPY_HOST", default="http://localhost")  # type: ignore
 SCRAPY_PORT = env("SCRAPY_PORT", default="6800")  # type: ignore
@@ -169,8 +169,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 from celery.schedules import crontab
 
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379") # type: ignore 
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://redis:6379") # type: ignore
 
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
