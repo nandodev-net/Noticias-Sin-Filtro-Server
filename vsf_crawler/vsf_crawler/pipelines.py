@@ -46,7 +46,6 @@ class VsfCrawlerPipeline:
         return item
 
     def close_spider(self, spider : Spider):
-
         # If no item gathered, just end
         if not self.items:
             return
@@ -56,17 +55,25 @@ class VsfCrawlerPipeline:
         categories= [item.get("categories") for item in self.items]
         self.items = []
 
+        headlines_created = []
         try:
             # Create new articles
-            ArticleHeadline.objects.bulk_create(headlines, ignore_conflicts=True)
+            headlines_created = ArticleHeadline.objects.bulk_create(headlines, ignore_conflicts=True)
         except Exception as e:
             logging.error(f"Could not create article headline objects. Error: {str(e)}")
 
         # Set up categories
+        created_index = 0
         for (headline, category_list) in zip(headlines, categories):
 
             assert headline
             assert category_list != None
+
+            if headlines_created[created_index].url == headline.url:
+                headline = headlines_created[created_index]
+                created_index += 1
+            else:
+                continue
 
             # Do nothing if no category list
             if not category_list: continue

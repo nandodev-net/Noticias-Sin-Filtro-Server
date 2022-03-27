@@ -58,9 +58,9 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = int(env("DEBUG", default=1))  # type: ignore
 
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")  # type: ignore
-CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", default="").split(" ") or [] # type: ignore
+CSRF_TRUSTED_ORIGINS = origins.split(" ") if (origins := env("CSRF_TRUSTED_ORIGINS", default="")) else [] # type: ignore
 # Scrapy server
-SCRAPY_HOST = env("SCRAPY_HOST", default="http://localhost")  # type: ignore
+SCRAPY_HOST = env("SCRAPY_HOST", default="localhost")  # type: ignore
 SCRAPY_PORT = env("SCRAPY_PORT", default="6800")  # type: ignore
 
 # Application definition

@@ -10,6 +10,7 @@
 # -- < Django integration > --------------------------------------------------
 
 import os
+from pickle import TRUE
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(".")))
@@ -33,7 +34,8 @@ NEWSPIDER_MODULE = 'vsf_crawler.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 LOG_FILE="log.txt"
-LOG_LEVEL="ERROR"
+LOG_LEVEL="DEBUG"
+# LOG_STDOUT=True
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
