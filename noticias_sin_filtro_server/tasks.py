@@ -16,7 +16,7 @@ def scraper_task():
     from app.scraper.models import ArticleHeadline
 
     # Write by hand currently active scrapers
-    scrapers_to_run = [ArticleHeadline.Source.LA_PATILLA.value]
+    scrapers_to_run = [ArticleHeadline.Source.LA_PATILLA.value, ArticleHeadline.Source.EFECTO_COCUYO.value]
     scraper = Scraper()
 
     logger.info(f"Starting to run scraping process for scrapers: {', '.join(scrapers_to_run)}") # type: ignore
