@@ -311,6 +311,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-colorfield"
+version = "0.6.3"
+description = "simple color field for your models with a nice color-picker in the admin-interface."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Pillow = ">=5.0"
+
+[[package]]
 name = "django-environ"
 version = "0.8.1"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
@@ -987,7 +998,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "106e19a7ddbd876b9e1eff77db72d70b9bdbe370dcedfe5a9f81f8667825c05f"
+content-hash = "5b5082f54605774bcd2679e99a61167f359a56553306eb562baffb91b4a62fae"
 
 [metadata.files]
 amqp = [
@@ -1178,6 +1189,10 @@ deprecated = [
 django = [
     {file = "Django-4.0.2-py3-none-any.whl", hash = "sha256:996495c58bff749232426c88726d8cd38d24c94d7c1d80835aafffa9bc52985a"},
     {file = "Django-4.0.2.tar.gz", hash = "sha256:110fb58fb12eca59e072ad59fc42d771cd642dd7a2f2416582aa9da7a8ef954a"},
+]
+django-colorfield = [
+    {file = "django-colorfield-0.6.3.tar.gz", hash = "sha256:441172f8c6024f70b01e3f63195fe83afc554387b34ad999880e86fde989e5af"},
+    {file = "django_colorfield-0.6.3-py3-none-any.whl", hash = "sha256:97625246fb5c4f4a17c9d83b2406a3c98dd9545c40c47741a7b62f7284609910"},
 ]
 django-environ = [
     {file = "django-environ-0.8.1.tar.gz", hash = "sha256:6f0bc902b43891656b20486938cba0861dc62892784a44919170719572a534cb"},

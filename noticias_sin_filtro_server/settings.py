@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     # VSF apps
     "app.scraper.apps.ScraperConfig",
     "rest_framework",
+    "colorfield"
 ]
 
 MIDDLEWARE = [

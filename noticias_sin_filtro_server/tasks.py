@@ -13,10 +13,10 @@ logger = get_task_logger(__name__)
 @shared_task
 def scraper_task():
     from app.scraper.scraper import Scraper
-    from app.scraper.models import ArticleHeadline
+    from app.scraper.models import MediaSite
 
     # Write by hand currently active scrapers
-    scrapers_to_run = [ArticleHeadline.Source.LA_PATILLA.value, ArticleHeadline.Source.EFECTO_COCUYO.value]
+    scrapers_to_run = [x.scraper for x in MediaSite.objects.all() if x.scraping_active]
     scraper = Scraper()
 
     logger.info(f"Starting to run scraping process for scrapers: {', '.join(scrapers_to_run)}") # type: ignore

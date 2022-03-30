@@ -22,6 +22,7 @@ from django.conf.urls import include
 # Local imports
 from app.scraper import urls as scraper_urls
 from noticias_sin_filtro_server.routers.v0_0_1 import urls as urls_v001
+from noticias_sin_filtro_server.routers.v0_0_2 import urls as urls_v002
 from noticias_sin_filtro_server.versioning.viewsets import KillSwitchViewSet
 
 urlpatterns = [
@@ -29,5 +30,6 @@ urlpatterns = [
     path("", include(scraper_urls)),
     path("version/", view=KillSwitchViewSet.as_view({"get": "get"})),
     path("v0.0.1/", include(urls_v001)),
+    path("v0.0.2/", include(urls_v002)),
     path("api-auth/", include("rest_framework.urls")),
 ]

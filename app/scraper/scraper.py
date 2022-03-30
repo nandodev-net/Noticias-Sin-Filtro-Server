@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from scrapyd_api import ScrapydAPI
 
 # Local imports
-from app.scraper.models import ArticleHeadline
+from app.scraper.models import MediaSite
 import noticias_sin_filtro_server.settings as settings
 
 scrapyd = ScrapydAPI(
@@ -22,8 +22,8 @@ class Scraper:
     """
 
     scraper_to_main_page = {
-        ArticleHeadline.Source.LA_PATILLA.value: "https://www.lapatilla.com",
-        ArticleHeadline.Source.EFECTO_COCUYO.value: "https://efectococuyo.com",
+        MediaSite.Scrapers.LA_PATILLA.value: "https://www.lapatilla.com",
+        MediaSite.Scrapers.EFECTO_COCUYO.value: "https://efectococuyo.com",
     }
 
     scrapy_project_name = "default"
@@ -81,4 +81,4 @@ class Scraper:
         """
         Returns a list with valid scrapers names as strings
         """
-        return ArticleHeadline.Source.values
+        return MediaSite.Scrapers.values

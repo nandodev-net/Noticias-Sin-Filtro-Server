@@ -23,6 +23,7 @@ djangorestframework = "^3.13.1"
 Markdown = "^3.3.6"
 django-filter = "^21.1"
 parsedatetime = "^2.6"
+django-colorfield = "^0.6.3"
 
 [tool.poetry.dev-dependencies]
 

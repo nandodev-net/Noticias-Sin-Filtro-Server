@@ -4,7 +4,7 @@
 # Local imports
 from typing import Iterable
 from vsf_crawler.data_schemes.efecto_cocuyo_scraped_data import EfectoCocuyoScrapedData
-from app.scraper.models import ArticleHeadline
+from app.scraper.models import MediaSite
 
 # Third party imports
 from scrapy import Spider
@@ -16,7 +16,7 @@ import datetime
 from pytz import utc
 
 class EfectoCocuyoSpider(Spider):
-    name = ArticleHeadline.Source.EFECTO_COCUYO.value #type: ignore
+    name = MediaSite.Scrapers.EFECTO_COCUYO.value #type: ignore
     allowed_domains = ['https://efectococuyo.com']
     start_urls = ['https://efectococuyo.com']
 
@@ -52,7 +52,7 @@ class EfectoCocuyoSpider(Spider):
                     scraped_date=datetime.datetime.now(tz=utc),
                     categories=[category],
                     img = img, 
-                    source=self.name, #type: ignore
+                    scraper=self.name, #type: ignore
                     relevance = False
                     )
             except Exception as e:

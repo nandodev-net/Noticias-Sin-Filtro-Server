@@ -3,7 +3,6 @@
 """
 
 # Python imports
-from typing import Dict
 import datetime
 
 from django.http import QueryDict
@@ -11,7 +10,7 @@ from django.http import QueryDict
 # Local imports
 from app.core.pagination import VIPagination
 from app.scraper.models import ArticleHeadline, ArticleCategory, MediaSite
-from app.scraper.api.v0_0_1.serializers import HeadlineSerializer, CategorySerializer
+from app.scraper.api.v0_0_2.serializers import HeadlineSerializer, CategorySerializer, MediaSiteSerializer
 from noticias_sin_filtro_server.settings import DATE_FORMAT
 
 # Third party imports
@@ -19,7 +18,6 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 
 # Django imports
-from django.db.models import Prefetch
 
 # -- < Headlines > ------------------------------------------------
 class HeadlineViewSet(viewsets.ModelViewSet):
@@ -113,17 +111,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
 # -- < Media Sites > -----------------------------------
 
 
-class MediaSiteViewSet(viewsets.ViewSet):
+class MediaSiteViewSet(viewsets.ModelViewSet):
     """
     Simple viewset to deliver all current sites
     """
-
-    permission_classes = []
+    queryset = MediaSite.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = MediaSiteSerializer
     pagination_class = None
-    serializer_class = None
-
-    def list(self, request):
-        return Response(MediaSite.Scrapers.values)
 
     def update(self, request, *args, **kwargs):
         return Response(status=status.HTTP_403_FORBIDDEN)

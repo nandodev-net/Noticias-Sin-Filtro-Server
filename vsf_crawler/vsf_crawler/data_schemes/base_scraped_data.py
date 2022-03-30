@@ -4,7 +4,7 @@
 
 # Local imports 
 from sre_parse import CATEGORIES
-from app.scraper.models import ArticleCategory, ArticleHeadline
+from app.scraper.models import ArticleCategory, ArticleHeadline, MediaSite
 
 # Python imports
 import dataclasses
@@ -28,7 +28,7 @@ class BaseDataScheme:
     date : str
     # image url
     img : str
-    source : str
+    scraper : str
     scraped_date : datetime.datetime
     relevance : Optional[bool] = None
     categories : List[str] = dataclasses.field(default_factory=list)
@@ -43,17 +43,22 @@ class BaseDataScheme:
                 The same applies to every data field.
         """
         categories = [
-                ArticleCategory.objects.get_or_create(name=category_name)[0]
+                ArticleCategory.objects.get_or_create(name=category_name, defaults={"color" : "#808080"})[0]
                 for category_name in self._map_categories(self.categories) 
             ]
-            
+        
+        try:
+            media_site = MediaSite.objects.all().filter(scraper=self.scraper).get()
+        except Exception as e:
+            raise AttributeError(f"Could not find media site related to scraper: {self.scraper}. Error: {e}")
+
         headline = ArticleHeadline(
             title   = self.title,
             excerpt = self.excerpt,
             url     = self.url,
             datetime    = self._map_datetime(self.date), # TODO Still don't know how to map dates in this site 
             scraped_date = self.scraped_date,
-            source  = self.source, 
+            source  = media_site, 
             image_url   = self.img,
             relevance = self.relevance
         )

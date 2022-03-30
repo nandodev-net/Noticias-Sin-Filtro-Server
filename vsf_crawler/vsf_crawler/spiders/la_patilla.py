@@ -2,9 +2,10 @@
     Spider to scrape data from the main feed in la patilla
 """
 # Local imports
+from asyncio.log import logger
 from typing import Iterable
 from vsf_crawler.data_schemes.la_patilla_scraped_data import LaPatillaScrapedData
-from app.scraper.models import ArticleHeadline
+from app.scraper.models import MediaSite
 
 # Third party imports
 from scrapy import Spider
@@ -15,8 +16,15 @@ import logging
 import datetime
 from pytz import utc
 
+# DEBUG ONLY ------------
+# import logging
+# handler = logging.FileHandler("somefile.txt")
+# logger = logging.getLogger()
+# logger.addHandler(handler)
+# -----------------------
+
 class LaPatillaSpider(Spider):
-    name = ArticleHeadline.Source.LA_PATILLA.value #type: ignore
+    name = MediaSite.Scrapers.LA_PATILLA.value #type: ignore
     allowed_domains = ['https://www.lapatilla.com']
     start_urls = ['https://www.lapatilla.com']
 
@@ -51,7 +59,7 @@ class LaPatillaSpider(Spider):
                     scraped_date=datetime.datetime.now(tz=utc),
                     categories=[category],
                     img = img, 
-                    source=self.name, #type: ignore
+                    scraper=self.name, #type: ignore
                     relevance = category == 'Destacados'
                     )
             except Exception as e:

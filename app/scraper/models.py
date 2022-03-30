@@ -7,6 +7,8 @@
 # Django imports
 from django.db import models
 
+# Third party imports
+from colorfield.fields import ColorField
 
 class ArticleCategory(models.Model):
     """
@@ -18,9 +20,37 @@ class ArticleCategory(models.Model):
         verbose_name="Category name", null=False, unique=True, max_length=200
     )
 
+    # Category color 
+    color = ColorField(default = '#808080', verbose_name = "Color")
+
     def __str__(self) -> str:
         return self.name
 
+class MediaSite(models.Model):
+    """
+        Represents a media site information
+    """
+    class Scrapers(models.TextChoices):
+        """
+        Possible sources of information, such like lapatilla, efectococuyo
+        """
+        LA_PATILLA = ("la_patilla", "La Patilla")
+        EFECTO_COCUYO = ("efecto_cocuyo", "Efecto cocuyo")
+
+    human_name = models.TextField(verbose_name='Site name (human readable)', null=False, max_length=100)
+    scraper = models.CharField(
+                    verbose_name='Scraper (its identifier)', 
+                    choices=Scrapers.choices, 
+                    null=False, 
+                    max_length=100, 
+                )
+    site_url = models.URLField(verbose_name="Site url", null=False, max_length=300)
+    name = models.TextField(verbose_name="Site name", null=False, max_length=100, unique=True)
+    site_url_image = models.URLField(verbose_name="Site image", null=True, max_length=300)
+    scraping_active = models.BooleanField(verbose_name="Scraping active", null=False, default=True)
+
+    def __str__(self) -> str:
+        return self.human_name
 
 class ArticleHeadline(models.Model):
     """
@@ -29,8 +59,8 @@ class ArticleHeadline(models.Model):
 
     class Source(models.TextChoices):
         """
-        Possible sources of information, such like lapatilla, efectococuyo
-        """
+        Possible sources of information, such like la patilla, efecto cocuyo
+        """ 
 
         LA_PATILLA = ("la_patilla", "La Patilla")
         EFECTO_COCUYO = ("efecto_cocuyo", "Efecto cocuyo")
@@ -57,9 +87,7 @@ class ArticleHeadline(models.Model):
     )
 
     # Where did this heading come from
-    source = models.CharField(
-        max_length=100, choices=Source.choices, default=Source.UNKNOWN
-    )
+    source = models.ForeignKey(to=MediaSite, on_delete=models.SET_NULL, null=True)
 
     # Url to the actual article
     url = models.URLField(verbose_name="Full article url", max_length=300, unique=True)
@@ -79,7 +107,7 @@ class ArticleHeadline(models.Model):
             "excerpt": self.excerpt,
             "image": self.image_url,
             "scraped_date": self.scraped_date,
-            "source": self.source,
+            "source": self.source.human_name,
         }
 
     def __str__(self) -> str:
