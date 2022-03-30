@@ -84,7 +84,7 @@ class HeadlineViewSet(viewsets.ModelViewSet):
         if (title_contains := params.get("title_contains")) != None:
             qs = qs.filter(title__icontains=title_contains)
 
-        qs.order_by("datetime", "title")
+        qs.order_by("-datetime", "title")
 
         return qs
 
