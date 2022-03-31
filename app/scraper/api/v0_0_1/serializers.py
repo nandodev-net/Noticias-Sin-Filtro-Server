@@ -3,7 +3,8 @@
     by the django restframework library to deliver model-based api calls
 """
 # Local imports
-from app.scraper.models import ArticleCategory, ArticleHeadline
+from attr import fields
+from app.scraper.models import ArticleCategory, ArticleHeadline, MediaSite
 
 # Third party imports
 from rest_framework import serializers
@@ -61,3 +62,15 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleCategory
         fields = ["name"]
+
+class MediaSiteSerializer(serializers.ModelSerializer):
+    """
+        Return just the site name
+    """
+
+    def to_representation(self, instance : MediaSite):
+        return instance.name
+        
+    class Meta:
+        model = MediaSite
+        fields = ['name']
