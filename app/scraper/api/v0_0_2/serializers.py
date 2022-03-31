@@ -30,7 +30,7 @@ class HeadlineSerializer(serializers.ModelSerializer):
     """
 
     categories = CategoryFieldSmall(read_only=True, many=True)
-    media_site = serializers.CharField(read_only=True, source="source__name")
+    media_site = serializers.CharField(read_only=True, source="source")
 
     class Meta:
         model = ArticleHeadline
