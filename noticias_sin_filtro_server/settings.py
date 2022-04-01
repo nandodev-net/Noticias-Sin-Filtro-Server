@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-import noticias_sin_filtro_server.tasks as tasks
+
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 # -- < App info > ------------------------------------
 VERSION = "0.0.1"

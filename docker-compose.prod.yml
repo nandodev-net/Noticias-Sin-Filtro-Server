@@ -45,6 +45,7 @@ services:
     depends_on:
       - web
       - flower
+    hostname: nginx
   redis:
     image: redis:alpine
     expose: 
