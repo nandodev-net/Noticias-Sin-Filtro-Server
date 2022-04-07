@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
 from pathlib import Path
 
 
@@ -169,7 +168,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # -- < Celery configurations > ------------------------------------------
-
+import noticias_sin_filtro_server.tasks as tasks
 from celery.schedules import crontab
 
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://redis:6379") # type: ignore 
