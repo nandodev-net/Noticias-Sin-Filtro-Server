@@ -18,7 +18,7 @@ class ArticleCategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "color")
 
 class MediaSiteAdmin(admin.ModelAdmin):
-    list_display = ("name", "human_name", "scraper", "site_url")
+    list_display = ("name", "human_name", "scraper", "site_url", "last_scraped")
 
 admin.site.register(ArticleHeadline, ArticleHeadLineAdmin)
 admin.site.register(ArticleCategory, ArticleCategoryAdmin)

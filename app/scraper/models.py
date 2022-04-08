@@ -4,7 +4,12 @@
     this model.
 """
 
+# python imports
+import datetime
+import pytz
+
 # Django imports
+from email.policy import default
 from django.db import models
 
 # Third party imports
@@ -47,7 +52,15 @@ class MediaSite(models.Model):
     site_url = models.URLField(verbose_name="Site url", null=False, max_length=300)
     name = models.TextField(verbose_name="Site name", null=False, max_length=100, unique=True)
     site_url_image = models.URLField(verbose_name="Site image", null=True, max_length=300)
+
+    # If this scraper is currently active
     scraping_active = models.BooleanField(verbose_name="Scraping active", null=False, default=True)
+
+    # how often we scrape
+    scraping_frequency_mins = models.IntegerField(verbose_name="Scraping frequency (minutes)", default=5, null=False)
+
+    # Last time this site was scraped
+    last_scraped = models.DateTimeField(verbose_name="Last time scraped", default=datetime.datetime(1970, 1, 1, 0, 0, tzinfo=pytz.utc))
 
     def __str__(self) -> str:
         return self.human_name
