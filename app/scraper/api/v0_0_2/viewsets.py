@@ -4,6 +4,7 @@
 
 # Python imports
 import datetime
+from ntpath import join
 
 from django.http import QueryDict
 
@@ -16,13 +17,17 @@ from noticias_sin_filtro_server.settings import DATE_FORMAT
 # Third party imports
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
+from rest_framework.request import Request
 
 # Django imports
 
 # -- < Headlines > ------------------------------------------------
 class HeadlineViewSet(viewsets.ModelViewSet):
     """
-    To manage querys over instances
+    Use this endpoint to browse `HeadLine` objects. A **`HeadLine`** represents an actual headline
+    in the main page of each news site. Usually, they provide categories, title, excerpt, a thumbnail image, 
+    and the url to the article's web page itself. Results are sorted by datetime and title, 
+    descending by date, ascending by title.
     """
 
     serializer_class = HeadlineSerializer
@@ -84,13 +89,90 @@ class HeadlineViewSet(viewsets.ModelViewSet):
 
         return qs
 
+    def options(self, request : Request, *args, **kwargs):
+        meta = self.metadata_class() # type: ignore
+        data = meta.determine_metadata(request, self)
+
+        media_site_names = [x.name for x in MediaSite.objects.all()]
+        categories_names = [x.name for x in ArticleCategory.objects.all()]
+        data['actions']['GET'] = {
+            "media_sites" : {
+                "in" : "query",
+                "type" : "array",
+                "description" : "sources that should be included in this query. Defaults to all.",
+                "required" : "false",
+                "default" : media_site_names,
+                "items" : {
+                    "type" : "string",
+                    "enum" : media_site_names,
+                }
+
+            },
+            "categories" : {
+                "in" : "query",
+                "type" : "array",
+                "description" : """categories that should be included in this query, it will return headlines such that they have at the least one of the categories listed here. Defaults to all.""",
+                "required" : "false",
+                "default" : categories_names,
+                "items" : {
+                    "type" : "string",
+                },
+            },
+            "relevance" : {
+                "in" : "query",
+                "type" : "bool",
+                "description" : """if delivered news should be all relevant (true), non relevant (false), or any (null). Defaults to null.""",
+                "required" : "false",
+                "default" : None
+            },
+            "start_date" : {
+                "in" : "query",
+                "type" : "datetime",
+                "description" : """start date for retrieved news. Format: YYYY-mm-dd:HH:MM:ss. If not provided (or set to null), returns articles from the start of time""",
+                "required" : "false",
+                "default" : None
+            },
+            "end_date" : {
+                "in" : "query",
+                "type" : "datetime",
+                "description" : """end date for retrieved news. Format: YYYY-mm-dd:HH:MM:ss. If not provided (or set to null), returns articles up to now""",
+                "required" : "false",
+                "default" : None
+            },
+            "title_contains" : {
+                "in" : "query",
+                "type" : "string",
+                "description" : """a string that should be contained by the headline's title. If not provided (or set to null), any title is valid""",
+                "required" : "false",
+                "default" : None
+            },    
+            "page" : {
+                "in" : "query",
+                "type" : "int",
+                "description" : """page to retrieve, """,
+                "required" : "false",
+                "default" : 1
+            },    
+            "page_size" : {
+                "in" : "query",
+                "type" : "int",
+                "description" : """page size for pagination""",
+                "required" : "false",
+                "default" : 50
+            },    
+        }
+
+        return Response(data=data, status=status.HTTP_200_OK)
 
 # -- < Categories > --------------------------------------------------
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
-    Represents a query for categories
+    Return a list with all categories and their color.
+
+    - `category_name` is the human-readable name 
+    - `category_lookable_name` is the machine-friendly name you pass to querys.
     """
 
     queryset = ArticleCategory.objects.all()
@@ -113,7 +195,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class MediaSiteViewSet(viewsets.ModelViewSet):
     """
-    Simple viewset to deliver all current sites
+    Return a list with all media sites names.
+
+    - `site_lookable_name` is a machine-friendly string you pass to querys, 
+    - `site_name` is an human friendly name. 
+    - `site_url` is an url to the site's main page
     """
     queryset = MediaSite.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

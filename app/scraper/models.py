@@ -107,7 +107,7 @@ class ArticleHeadline(models.Model):
             "excerpt": self.excerpt,
             "image": self.image_url,
             "scraped_date": self.scraped_date,
-            "source": self.source.human_name,
+            "source": self.source.human_name, # type: ignore
         }
 
     def __str__(self) -> str:
