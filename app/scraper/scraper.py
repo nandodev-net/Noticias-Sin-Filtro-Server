@@ -24,6 +24,8 @@ class Scraper:
     scraper_to_main_page = {
         MediaSite.Scrapers.LA_PATILLA.value: "https://www.lapatilla.com",
         MediaSite.Scrapers.EFECTO_COCUYO.value: "https://efectococuyo.com",
+        MediaSite.Scrapers.EL_NACIONAL.value: "https://www.elnacional.com",
+        MediaSite.Scrapers.CRONICA_UNO.value: "https://cronica.uno"
     }
 
     scrapy_project_name = "default"

@@ -41,6 +41,9 @@ class MediaSite(models.Model):
         """
         LA_PATILLA = ("la_patilla", "La Patilla")
         EFECTO_COCUYO = ("efecto_cocuyo", "Efecto cocuyo")
+        EL_NACIONAL = ("el_nacional", "El Nacional")
+        CRONICA_UNO = ("cronica_uno", "Crónica Uno")
+        
 
     human_name = models.TextField(verbose_name='Site name (human readable)', null=False, max_length=100)
     scraper = models.CharField(
