@@ -83,6 +83,11 @@ class BaseDataScheme:
 
         # code == 0 means it could not parse the given date
         if code == 0:
-            return None
+            # try to parse in english
+            constants = parsedatetime.Constants(localeID='en', usePyICU=False)
+            calendar = parsedatetime.Calendar(constants)
+            result, code = calendar.parse(datetime_str)
+            if code == 0:
+                return None 
 
         return datetime.datetime(*result[:6]) # some magic words

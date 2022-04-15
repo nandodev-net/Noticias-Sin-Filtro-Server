@@ -40,7 +40,7 @@ class VsfCrawlerPipeline:
         try:
             article, categories_objects = item.as_headline()
             article.save()
-            article.categories.set(categories_objects)
+            article.categories.set(categories_objects) # type: ignore
         except Exception as e:
             logging.error(f"Error creating ArticleHeadline object: {str(e)}")
 
