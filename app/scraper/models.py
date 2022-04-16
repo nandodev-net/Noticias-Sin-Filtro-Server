@@ -43,6 +43,7 @@ class MediaSite(models.Model):
         EFECTO_COCUYO = ("efecto_cocuyo", "Efecto cocuyo")
         EL_NACIONAL = ("el_nacional", "El Nacional")
         CRONICA_UNO = ("cronica_uno", "Crónica Uno")
+        RUNRUNES    = ("runrunes", "Runrunes")
         
 
     human_name = models.TextField(verbose_name='Site name (human readable)', null=False, max_length=100)
@@ -95,7 +96,7 @@ class ArticleHeadline(models.Model):
     excerpt = models.TextField(default="Excerpt", null=True, max_length=300)
 
     # Main image for this headline
-    image_url = models.URLField(verbose_name="Image source", max_length=300)
+    image_url = models.URLField(verbose_name="Image source", max_length=300, null=True)
 
     # Scraped date
     scraped_date = models.DateTimeField(
