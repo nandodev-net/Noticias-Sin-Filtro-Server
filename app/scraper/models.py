@@ -9,7 +9,6 @@ import datetime
 import pytz
 
 # Django imports
-from email.policy import default
 from django.db import models
 
 # Third party imports
@@ -17,7 +16,7 @@ from colorfield.fields import ColorField
 
 class ArticleCategory(models.Model):
     """
-    A category to classify articles
+        A category to classify articles
     """
 
     # Category actual value
@@ -27,6 +26,9 @@ class ArticleCategory(models.Model):
 
     # Category color 
     color = ColorField(default = '#808080', verbose_name = "Color")
+
+    # If this is a category selected by the editors
+    editors_choice = models.BooleanField(verbose_name= "Is Editor's choice", default= False)
 
     def __str__(self) -> str:
         return self.name
@@ -118,14 +120,21 @@ class ArticleHeadline(models.Model):
         Easily convert to dict
         """
         return {
-            "title": self.title,
-            "date": self.datetime,
-            "categories": self.categories,
-            "excerpt": self.excerpt,
-            "image": self.image_url,
-            "scraped_date": self.scraped_date,
-            "source": self.source.human_name, # type: ignore
+            "title" : self.title,
+            "date" : self.datetime,
+            "categories" : self.categories,
+            "excerpt" : self.excerpt,
+            "image" : self.image_url,
+            "scraped_date" : self.scraped_date,
+            "source" : self.source.human_name, # type: ignore
         }
 
     def __str__(self) -> str:
         return f"Article(title = {self.title}, source = {self.source}, scraped_date = {self.scraped_date})"
+
+    def relevance_value(self) -> float:
+        """
+            Return relevance measurement of this Headline
+        """
+        return 0
+        
