@@ -114,6 +114,9 @@ class ArticleHeadline(models.Model):
     # If this article was relevant in its original site
     relevance = models.BooleanField(verbose_name="Relevance", default=None, null=True)
 
+    # If this was selected by and editor as featured
+    editors_choice = models.BooleanField(verbose_name="Editor's choice", default=False, null=False)
+
     @property
     def as_dict(self):
         """
