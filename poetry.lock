@@ -358,6 +358,18 @@ django = ">=2.2"
 pytz = "*"
 
 [[package]]
+name = "djangorestframework-dataclasses"
+version = "1.1.1"
+description = "A dataclasses serializer for Django REST Framework"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+django = ">=2.0"
+djangorestframework = ">=3.9"
+
+[[package]]
 name = "gunicorn"
 version = "20.1.0"
 description = "WSGI HTTP Server for UNIX"
@@ -998,7 +1010,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5b5082f54605774bcd2679e99a61167f359a56553306eb562baffb91b4a62fae"
+content-hash = "27036733528ff35bb9dd0e6671967f915a9081201bdd05e80d57d27b7a9589f2"
 
 [metadata.files]
 amqp = [
@@ -1205,6 +1217,10 @@ django-filter = [
 djangorestframework = [
     {file = "djangorestframework-3.13.1-py3-none-any.whl", hash = "sha256:24c4bf58ed7e85d1fe4ba250ab2da926d263cd57d64b03e8dcef0ac683f8b1aa"},
     {file = "djangorestframework-3.13.1.tar.gz", hash = "sha256:0c33407ce23acc68eca2a6e46424b008c9c02eceb8cf18581921d0092bc1f2ee"},
+]
+djangorestframework-dataclasses = [
+    {file = "djangorestframework-dataclasses-1.1.1.tar.gz", hash = "sha256:11bed97049e433cdf00ebf963dac7b7f087aa5bedf92e04b48fe6b01467b0cf2"},
+    {file = "djangorestframework_dataclasses-1.1.1-py3-none-any.whl", hash = "sha256:aa4b23ac3de4ce25e82dd24110ddb9ff6551e2032ed7f25e8687eca6b4d7a472"},
 ]
 gunicorn = [
     {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
