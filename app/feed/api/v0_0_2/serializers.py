@@ -3,15 +3,12 @@
 """
 
 # Third party imports
-from dataclasses import dataclass
-from unicodedata import category
-from rest_framework import serializers
 from rest_framework import fields
 from rest_framework_dataclasses.serializers import DataclassSerializer
 
 # Local imports
-from app.feed.feed import Feed, FeedContent, Section
-from app.scraper.api.v0_0_2.serializers import HeadlineSerializer, CategorySerializer
+from app.feed.feed import  FeedContent, Section, Feedback
+from app.scraper.api.v0_0_2.serializers import HeadlineSerializer, CategorySerializer, MediaSiteSerializer
 
 class SectionSerializer(DataclassSerializer):
     """
@@ -34,3 +31,14 @@ class FeedContentSerializer(DataclassSerializer):
 
     class Meta:
         dataclass = FeedContent
+
+class FeedbackSerializer(DataclassSerializer):
+    """
+        Serialize a Feedback object
+    """
+
+    prefered_categories = fields.ListField(child=CategorySerializer())
+    prefered_media = fields.ListField(child=MediaSiteSerializer())
+
+    class Meta:
+        dataclass = Feedback
