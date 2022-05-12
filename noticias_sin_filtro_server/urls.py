@@ -23,7 +23,7 @@ from django.conf.urls import include
 from app.scraper import urls as scraper_urls
 from noticias_sin_filtro_server.routers.v0_0_1 import urls as urls_v001
 from noticias_sin_filtro_server.routers.v0_0_2 import urls as urls_v002
-from noticias_sin_filtro_server.versioning.viewsets import KillSwitchViewSet
+from app.killswitch.viewsets import KillSwitchViewSet
 
 urlpatterns = [
     path("admin/", admin.site.urls),

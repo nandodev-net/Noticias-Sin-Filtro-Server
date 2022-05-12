@@ -19,30 +19,42 @@ from app.scraper.models import ArticleCategory, MediaSite
 
 class FeedView(APIView):
     """
-        Deliver the feed to the api
+    Use this method to get a stream  of news for the feed.
+
+    # Parameters
+    - **feedback** : `Object` = (optional) Data from the user useful to populate the feed according to her preferences. 
+        Expected format:      
+        
+            {
+                prefered_categories : [str] = List of category names
+                prefered_media : [str] = List of media site names
+            }
+            
+
+    Defaults to no feed, delivered headlines might not be interesting for the user
+
+    - **amount_featured** : `int` = (optional) amount of featured / special news to show up as the first section. Defaults to 3
+    - **instance_per_section** : `int` = (optional) how many headlines to deliver per section. Defaults to 4
+    - **categories_sections** : `[str]`  = (optional) categories to show up in the feed as sections. Defaults to editor's choice
+    # Returns
+    An object, with the following format:   
+
+        {
+            "featured" : [ArticleHeadline]
+            "sections" : [Section]
+        }
+    Where Section has the following format:
+
+        {
+            "category" : ArticleCategory,
+            "news" : [ArticleHeadline],
+            "name" : str,
+        }
     """
     permission_classes = []
     pagination_class = None
 
-    def post(self, request : Request, *args, **kwargs):
-        """
-            Use this method to get a stream  of news for the feed.
-
-            # Parameters
-                - feedback : `Object` = (optional) Data from the user useful to populate the feed according to her preferences. 
-                        Expected format:      
-                            ```
-                            {
-                                prefered_categories : [str] = List of category names
-                                prefered_media : [str] = List of media site names
-                            }
-                            ```
-
-                Defaults to no feed, delivered headlines might not be interesting for the user
-                - amount_featured : `int` = (optional) amount of featured / special news to show up as the first section. Defaults to 3
-                - instance_per_section : `int` = (optional) how many headlines to deliver per section. Defaults to 4
-                - categories_sections : `List[str]`  = (optional) categories to show up in the feed as sections. Defaults to editor's choice
-        """
+    def post(self, request : Request):
         # Parse arguments
         data = request.data
 
@@ -55,11 +67,8 @@ class FeedView(APIView):
             except JSONDecodeError:
                 return Response(data={"error" : "feedback object is not dict-like."}, status=400)
                  
-
         if not isinstance(feedback, dict):
             return Response(data={"error" : "feedback object is not dict-like."}, status=400) 
-
-        
 
         # Check prefered categories
         if (prefered_categories := feedback.get("prefered_categories")) is None:

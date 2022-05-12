@@ -74,8 +74,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # VSF apps
     "app.scraper.apps.ScraperConfig",
+    "app.killswitch.apps.KillswitchConfig",
+
+    # Third party
     "rest_framework",
     "colorfield"
 ]

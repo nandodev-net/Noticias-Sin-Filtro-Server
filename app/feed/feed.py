@@ -27,9 +27,6 @@ class Section:
     # Actual headlines to show in this section
     news        : List[ArticleHeadline]
 
-    # Coming soon: link to main feed for this section
-    link_to_see_more : str
-
 @dataclasses.dataclass
 class FeedContent:
     """
@@ -225,7 +222,7 @@ class Feed:
 
             added = len(headlines)
         
-        return Section(section_category.name, section_category, headlines, "Not yet implemented")
+        return Section(section_category.name, section_category, headlines)
 
     def get_best_categories(self, limit : int, mandatory_categories : List[ArticleCategory] = [], feedback : Optional[Feedback] = None) -> List[ArticleCategory]:
         """

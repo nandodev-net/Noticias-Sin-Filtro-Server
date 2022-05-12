@@ -84,3 +84,19 @@ class KillSwtich:
             return Compatibility.UPGRADABLE_COMPATIBLE
         else:
             return Compatibility.NOT_COMPATIBLE
+
+    @classmethod
+    def get_compatibility_msg(cls, compatibility : Compatibility) -> str:
+        """
+            Get a compatibility string based on the given type of compatibility
+        """
+        from app.killswitch.models import KillswithcSettings
+
+        settings = KillswithcSettings.load()
+        comp_map = {
+            Compatibility.LAST_VERSION : settings.last_version_msg,
+            Compatibility.NOT_COMPATIBLE : settings.non_compatible_msg,
+            Compatibility.UPGRADABLE_COMPATIBLE : settings.upgradable_compatible_msg
+        }
+
+        return comp_map[compatibility]
