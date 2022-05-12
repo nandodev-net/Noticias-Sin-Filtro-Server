@@ -1,7 +1,6 @@
 from django.contrib import admin
 from app.scraper.models import ArticleHeadline, ArticleCategory, MediaSite
 
-# Register your models here.
 
 
 class ArticleHeadLineAdmin(admin.ModelAdmin):
@@ -15,7 +14,7 @@ class ArticleHeadLineAdmin(admin.ModelAdmin):
 
 
 class ArticleCategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "color")
+    list_display = ("name", "color", "editors_choice")
 
 class MediaSiteAdmin(admin.ModelAdmin):
     list_display = ("name", "human_name", "scraper", "site_url", "last_scraped")

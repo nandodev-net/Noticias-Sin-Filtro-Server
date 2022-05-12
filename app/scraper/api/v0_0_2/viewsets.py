@@ -171,11 +171,16 @@ class CategoryViewSet(viewsets.ModelViewSet):
     """
     Return a list with all categories and their color.
 
-    - `category_name` is the human-readable name 
-    - `category_lookable_name` is the machine-friendly name you pass to querys.
+    # Parameters
+    - `editors_choice` : `bool` = (optional) if retrieved categories should all be "editors choice" categories. 
+                                    If not provided (null), return any category
+    # Returns
+    - `category_name` : `str` = the human-readable name 
+    - `category_lookable_name` : `str` = the machine-friendly name you pass to querys.
+    - `color` : `str` = the color in hex for this category
+    - `editors_choice` : `bool`= if this category is editors choice or not
     """
 
-    queryset = ArticleCategory.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = None
@@ -188,6 +193,18 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+    def get_queryset(self):
+        """
+            Filter according to the specified query params
+        """
+        queryset = ArticleCategory.objects.all()
+        params: QueryDict = self.request.query_params # type: ignore
+
+        if (is_editors_choice := params.get("editors_choice")) is not None:
+            queryset = queryset.filter(editors_choice = is_editors_choice.lower() == "true")
+
+        return queryset
 
 
 # -- < Media Sites > -----------------------------------

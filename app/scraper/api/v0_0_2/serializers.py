@@ -74,8 +74,8 @@ class CategorySerializer(serializers.ModelSerializer):
     """
 
     def to_representation(self, instance: ArticleCategory):
-        return {"category_name" : instance.name, "category_lookable_name" : instance.name, "category_color" : instance.color}
+        return {"category_name" : instance.name, "category_lookable_name" : instance.name, "category_color" : instance.color, "editors_choice" : instance.editors_choice}
 
     class Meta:
         model = ArticleCategory
-        fields = ["name", "color"]
+        fields = ["name", "color", "editors_choice"]
