@@ -1,0 +1,13 @@
+# Configuration file for the scrapyd service used inside the docker container
+[Unit]
+Description=Scrapyd service
+After=network.target
+
+[Service]
+User=vsf
+Group=vsf
+WorkingDirectory=$HOME/.scrapyd
+ExecStart=/usr/local/bin/scrapyd
+
+[Install]
+WantedBy=multi-user.target
