@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     # VSF apps
     "app.scraper.apps.ScraperConfig",
     "app.killswitch.apps.KillswitchConfig",
+    "app.audio_player.apps.AudioPlayerConfig",
 
     # Third party
     "rest_framework",
