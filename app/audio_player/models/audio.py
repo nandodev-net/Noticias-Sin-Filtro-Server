@@ -12,6 +12,7 @@ class Audio(TimeStampedModel):
     duration = models.DurationField(default= dt.timedelta(seconds=0))
     author = models.ForeignKey(Author, related_name='audios' , on_delete=models.CASCADE)
     audioUrl = models.CharField(max_length=200, blank= True, null= True)
+    date = models.DateTimeField(null = True, blank = True)
 
     def __str__(self):
         return '({})- {} - {}'.format(

@@ -13,7 +13,10 @@ from app.scraper.api.v0_0_2.viewsets import (
     MediaSiteViewSet,
 )
 from app.feed.api.v0_0_2.viewsets import FeedView
-
+from app.audio_player.api.v0_0_2.viewsets import (
+    MainScreenApiView,
+    AuthorScreenApiView
+    )
 
 # Third party imports
 from rest_framework import routers
@@ -30,7 +33,9 @@ router.register(r"categories", CategoryViewSet, basename="categories")
 router.register(r"media_sites", MediaSiteViewSet, basename="media_sites")
 
 urls = [
-    path('feed/', FeedView.as_view(), name="feed")
+    path('feed/', FeedView.as_view(), name="feed"),
+    path('audio/main/', MainScreenApiView.as_view(), name='audio_main_screen'),
+    path('audio/author/<int:pk>/', AuthorScreenApiView.as_view(), name='author_screen'),
 ]
 
 urls += router.urls
