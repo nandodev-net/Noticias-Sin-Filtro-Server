@@ -5,6 +5,7 @@ def build_audio_obj(audio):
         'duration': audio.duration,
         'author': audio.author.name,
         'thumbnailUrl': audio.author.thumbnailUrl,
+        'audioUrl': audio.audioUrl,
         'listenCount': audio.listen_count,
         'votes': audio.votes,
     }

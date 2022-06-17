@@ -10,7 +10,7 @@ from .utils import build_audio_obj
 
 
 class MainScreenApiView(generics.GenericAPIView):
-    queryset = Author.objects.all()
+    queryset = Author.objects.exclude(audios__isnull=True)
     http_method_names = [u'get']
     serializer_class = MainScreenSerializer
 
@@ -20,7 +20,6 @@ class MainScreenApiView(generics.GenericAPIView):
         if len(queryset)>0:
             # Calculate favorite last capsule
 
-            
             last_added = []
             most_listened = []
             most_voted = []

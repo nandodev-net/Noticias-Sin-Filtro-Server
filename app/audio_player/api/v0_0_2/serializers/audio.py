@@ -8,6 +8,7 @@ class AudioSerializer(serializers.Serializer):
     duration = serializers.DurationField(read_only=True)
     author = serializers.CharField(read_only=True)
     thumbnailUrl = serializers.CharField(read_only=True)
+    audioUrl = serializers.CharField(read_only=True)
     listenCount = serializers.IntegerField(read_only=True)
     votes = serializers.IntegerField(read_only=True)
 
