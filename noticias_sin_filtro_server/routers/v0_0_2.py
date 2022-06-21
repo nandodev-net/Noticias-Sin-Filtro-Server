@@ -15,7 +15,9 @@ from app.scraper.api.v0_0_2.viewsets import (
 from app.feed.api.v0_0_2.viewsets import FeedView
 from app.audio_player.api.v0_0_2.viewsets import (
     MainScreenApiView,
-    AuthorScreenApiView
+    AuthorScreenApiView,
+    SearchResultsScreenApiView,
+    AuthorSuggestionsApiView
     )
 
 # Third party imports
@@ -36,6 +38,8 @@ urls = [
     path('feed/', FeedView.as_view(), name="feed"),
     path('audio/main/', MainScreenApiView.as_view(), name='audio_main_screen'),
     path('audio/author/<int:pk>/', AuthorScreenApiView.as_view(), name='author_screen'),
+    path('audio/search/<str:pk>/', SearchResultsScreenApiView.as_view(), name='search_results_screen'),
+    path('audio/suggestions/', AuthorSuggestionsApiView.as_view(), name='search_suggestions_screen'),
 ]
 
 urls += router.urls

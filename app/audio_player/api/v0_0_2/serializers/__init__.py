@@ -6,6 +6,7 @@ from .audio import (
     )
 from .author import (
     AuthorSerializer, 
+    AuthorSuggestionsSerializer,
     )
 
 __all__ = [
@@ -13,4 +14,5 @@ __all__ = [
     AuthorSerializer,
     AuthorScreenSerializer,
     MainScreenSerializer,
+    AuthorSuggestionsSerializer,
 ]

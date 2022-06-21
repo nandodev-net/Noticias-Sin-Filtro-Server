@@ -8,3 +8,7 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AuthorSuggestionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = ['name']
