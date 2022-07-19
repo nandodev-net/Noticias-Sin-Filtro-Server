@@ -9,6 +9,7 @@
 
 # -- < Django integration > --------------------------------------------------
 
+import imp
 import os
 from pickle import TRUE
 import sys
@@ -28,8 +29,10 @@ SPIDER_MODULES = ['vsf_crawler.spiders']
 NEWSPIDER_MODULE = 'vsf_crawler.spiders'
 
 
+
+from vsf_crawler.utils import get_random_agent
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'vsf_crawler (+http://www.yourdomain.com)'
+# USER_AGENT = get_random_agent() # TODO tenemos que tener nuestro propio agente, estamos usando uno random para acceder facilmente
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True

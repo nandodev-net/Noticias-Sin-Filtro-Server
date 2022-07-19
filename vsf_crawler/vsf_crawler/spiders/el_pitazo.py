@@ -5,7 +5,9 @@
 # Local imports
 from asyncio.log import logger
 from typing import Iterable
-from vsf_crawler.data_schemes.la_patilla_scraped_data import LaPatillaScrapedData
+
+from requests import head
+from vsf_crawler.data_schemes.el_pitazo_scraped_data import ElPitazoScrapedData
 from app.scraper.models import MediaSite
 
 # Third party imports
@@ -16,53 +18,71 @@ from scrapy.http import Response
 import logging
 import datetime
 from pytz import utc
+import bs4
 
 # DEBUG ONLY ------------
-# import logging
-# handler = logging.FileHandler("somefile.txt")
-# logger = logging.getLogger()
-# logger.addHandler(handler)
+import logging
+handler = logging.FileHandler("somefile.txt")
+logger = logging.getLogger()
+logger.addHandler(handler)
 # -----------------------
 
 class ElPitazoSpider(Spider):
     name = MediaSite.Scrapers.EL_PITAZO.value #type: ignore
-    allowed_domains = ['https://elpitazo.net']
-    start_urls = ['https://elpitazo.net/feed/']
+    allowed_domains = ['elpitazo.net']
+    start_urls = ['https://elpitazo.net/feed']
 
-
-    def parse(self, response : Response) -> Iterable[LaPatillaScrapedData]:
+    def parse(self, response : Response) -> Iterable[ElPitazoScrapedData]:
         """
             Specifically made to parse "la patilla" main page
         """
+        logger.info(f"IM STARTING TO PARSE RESPONSE {response}")
         assert self.name, "Spider missconfigured"
-        thumbnails = response.css(".homenews-container > .row > div")
+        posts = response.xpath("//channel/item")
+        for item in posts: # type: ignore
 
-        for thumbnail in thumbnails: # type: ignore
             try: # type: ignore
-                category = thumbnail.css("div > .cat-name-time > .cat-name ::text").get()
-                date = thumbnail.css("div > .cat-name-time > .post-date ::text").get().strip()
-                title = thumbnail.css("div > .post-title > a > h4 ::text").get()
-                excerpt = thumbnail.css("div > .home-post-excerpt ::text").get().strip()
-                
-                # Parse url
-                url = thumbnail.css("div > .post-img-sec > a::attr(href)").extract()
-                url = url[0] if url else url
+                descript = item.xpath('description//text()').extract_first()
+                descript_soup = bs4.BeautifulSoup(descript)
+                excerpt = descript_soup.find("p").getText() # type: ignore
+                # img = descript_soup.find("img") # type: ignore
+                title  = item.xpath('title//text()').extract_first(),
+                url = item.xpath('link//text()').extract_first(),
+                date  = item.xpath('pubDate//text()').extract_first(),
+                author  = item.xpath('creator//text()').extract_first(),
+                categories  = list(item.xpath('category//text()').extract())
 
-                # Parse img url
-                img = thumbnail.css("div > .post-img-sec > .post-thumbnail > img::attr(src)").extract()
-                img = img[0] if img else img
+                print(excerpt)
+                print(title[0])
+                print(url[0])
+                print(date[0])
+                print(author[0])
+                print(categories)
 
-                item = LaPatillaScrapedData(
-                    title=title, 
+                item = ElPitazoScrapedData(
+                    title=title[0], 
                     excerpt=excerpt, 
-                    url=url,
-                    date=date,
+                    url=url[0],
+                    date=date[0],
                     scraped_date=datetime.datetime.now(tz=utc),
-                    categories=[category],
-                    img = img, 
+                    categories=categories, 
+                    img = None, #type: ignore
                     scraper=self.name, #type: ignore
-                    relevance = category == 'Destacados'
+                    relevance = False
                     )
+                logger.info(f"Saving item: {item}")
             except Exception as e:
                 logging.error(f"Error creating new item from response: {str(e)}")
             yield item        
+
+    def start_requests(self):
+
+        headers = {
+            "Accept": "text/html, */*; q=0.01",
+            "Referer" : None,
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36 OPR/84.0.4316.31"
+        }
+        for r in super().start_requests():
+            for (k, v) in headers.items():
+                r.headers[k] = v            
+            yield r

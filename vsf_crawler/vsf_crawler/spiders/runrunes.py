@@ -4,7 +4,7 @@
 """
 # Local imports
 from typing import Iterable
-from vsf_crawler.data_schemes.cronica_uno_scraped_data import CronicaUnoScrapedData
+from vsf_crawler.data_schemes.runrunes_scraped_data import RunRunesScrapedData
 from app.scraper.models import MediaSite
 
 # Third party imports
@@ -29,7 +29,7 @@ class RunRunes(Spider):
     allowed_domains = ['runrun.es']
     start_urls = ['https://runrun.es/feed/']
 
-    def parse(self, response : Response) -> Iterable[CronicaUnoScrapedData]:
+    def parse(self, response : Response) -> Iterable[RunRunesScrapedData]:
         """
             Specifically made to parse "runrunes" rss feed
         """
@@ -56,7 +56,7 @@ class RunRunes(Spider):
                 print(author)
                 print(categories)
 
-                item = CronicaUnoScrapedData(
+                item = RunRunesScrapedData(
                     title=title[0], 
                     excerpt=excerpt, 
                     url=url[0],
@@ -67,6 +67,6 @@ class RunRunes(Spider):
                     scraper=self.name, #type: ignore
                     relevance = False
                     )
-            except FileExistsError as e:
+            except Exception as e:
                 logging.error(f"Error creating new item from response: {str(e)}")
             yield item        

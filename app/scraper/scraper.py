@@ -26,7 +26,8 @@ class Scraper:
         MediaSite.Scrapers.EFECTO_COCUYO.value: "https://efectococuyo.com",
         MediaSite.Scrapers.EL_NACIONAL.value: "https://www.elnacional.com",
         MediaSite.Scrapers.CRONICA_UNO.value: "https://cronica.uno",
-        MediaSite.Scrapers.RUNRUNES.value: "https://runrun.es"
+        MediaSite.Scrapers.RUNRUNES.value: "https://runrun.es",
+        MediaSite.Scrapers.EL_PITAZO.value: "https://elpitazo.net"
     }
 
     scrapy_project_name = "default"
