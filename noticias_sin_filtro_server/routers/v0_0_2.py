@@ -5,6 +5,7 @@
 """
 # Django imports
 from django.urls import path
+from app.audio_player.api.v0_0_2.viewsets.player_screen import VotedAudioCounterApiView
 
 # Local imports
 from app.scraper.api.v0_0_2.viewsets import (
@@ -17,7 +18,9 @@ from app.audio_player.api.v0_0_2.viewsets import (
     MainScreenApiView,
     AuthorScreenApiView,
     SearchResultsScreenApiView,
-    AuthorSuggestionsApiView
+    AuthorSuggestionsApiView,
+    VotedAudioCounterApiView,
+    AudioListenCounterApiView
     )
 
 # Third party imports
@@ -40,6 +43,8 @@ urls = [
     path('audio/author/<int:pk>/', AuthorScreenApiView.as_view(), name='author_screen'),
     path('audio/search/<str:pk>/', SearchResultsScreenApiView.as_view(), name='search_results_screen'),
     path('audio/suggestions/', AuthorSuggestionsApiView.as_view(), name='search_suggestions_screen'),
+    path('audio/voted/<int:pk>/<int:option>/', VotedAudioCounterApiView.as_view(), name='player_screen_voted'),
+    path('audio/listened/<int:pk>/', AudioListenCounterApiView.as_view(), name='player_screen_listened'),
 ]
 
 urls += router.urls

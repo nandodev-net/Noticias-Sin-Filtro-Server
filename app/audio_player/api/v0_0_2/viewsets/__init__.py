@@ -4,10 +4,16 @@ from .search_screen import (
     SearchResultsScreenApiView, 
     AuthorSuggestionsApiView
     )
+from .player_screen import (
+    VotedAudioCounterApiView,
+    AudioListenCounterApiView,
+    )
 
 __all__ = [
     MainScreenApiView,
     AuthorScreenApiView,
     SearchResultsScreenApiView,
     AuthorSuggestionsApiView,
+    VotedAudioCounterApiView,
+    AudioListenCounterApiView,
 ]
