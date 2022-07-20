@@ -46,6 +46,7 @@ class MediaSite(models.Model):
         EL_NACIONAL = ("el_nacional", "El Nacional")
         CRONICA_UNO = ("cronica_uno", "Crónica Uno")
         RUNRUNES    = ("runrunes", "Runrunes")
+        EL_PITAZO    = ("el_pitazo", "El Pitazo")
         
 
     human_name = models.TextField(verbose_name='Site name (human readable)', null=False, max_length=100)

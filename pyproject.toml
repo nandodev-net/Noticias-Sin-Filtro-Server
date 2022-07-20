@@ -25,6 +25,7 @@ django-filter = "^21.1"
 parsedatetime = "^2.6"
 django-colorfield = "^0.6.3"
 djangorestframework-dataclasses = "^1.1.1"
+django-model-utils = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 
