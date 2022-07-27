@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "app.scraper.apps.ScraperConfig",
     "app.killswitch.apps.KillswitchConfig",
     "app.audio_player.apps.AudioPlayerConfig",
+    "app.client_dashboard.apps.ClientDashboardConfig",
 
     # Third party
     "rest_framework",
