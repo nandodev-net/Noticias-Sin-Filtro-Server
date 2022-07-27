@@ -7,6 +7,9 @@ class AudioSerializer(serializers.Serializer):
     title = serializers.CharField(read_only=True)
     duration = serializers.DurationField(read_only=True)
     author = serializers.CharField(read_only=True)
+    author_id = serializers.IntegerField(read_only=True)
+    author_description = serializers.CharField(read_only=True)
+    author_type = serializers.CharField(read_only=True)
     thumbnailUrl = serializers.CharField(read_only=True)
     audioUrl = serializers.CharField(read_only=True)
     listenCount = serializers.IntegerField(read_only=True)
@@ -16,7 +19,8 @@ class AudioSerializer(serializers.Serializer):
 class MainScreenSerializer(serializers.Serializer):
     last_capsule = AudioSerializer(read_only=True, many=True)
     recently_added = AudioSerializer(read_only=True, many=True)
-    authors = AuthorSerializer(read_only=True, many=True)
+    news_authors = AuthorSerializer(read_only=True, many=True)
+    podcast_authors = AuthorSerializer(read_only=True, many=True)
     most_voted = AudioSerializer(read_only=True, many=True)
     most_listened = AudioSerializer(read_only=True, many=True)
 

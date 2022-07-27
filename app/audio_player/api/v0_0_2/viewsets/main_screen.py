@@ -36,14 +36,14 @@ class MainScreenApiView(generics.GenericAPIView):
 
                 # For each author return the most listened
                 try:
-                    ml_audio = audios.order_by('-listen_count')[0]
+                    ml_audio = audios.filter(author__type=Author.AUTH_PODCASTS).order_by('-listen_count')[0]
                     most_listened.append(build_audio_obj(ml_audio))
                 except Exception:
                     pass
             
                 # For each author return the most voted
                 try:
-                    mv_audio = audios.order_by('-votes')[0]
+                    mv_audio = audios.filter(author__type=Author.AUTH_PODCASTS).order_by('-votes')[0]
                     most_voted.append(build_audio_obj(mv_audio))
                 except Exception:
                     pass
@@ -52,7 +52,8 @@ class MainScreenApiView(generics.GenericAPIView):
             main_screen_dic = {
                 'last_capsule': [last_added[0]], #TODO cambiar esto
                 'recently_added': last_added,
-                'authors': queryset,
+                'news_authors':queryset.filter(type=Author.AUTH_NEWS),
+                'podcast_authors': queryset.filter(type=Author.AUTH_PODCASTS),
                 'most_voted': most_voted,
                 'most_listened': most_listened,
             }
