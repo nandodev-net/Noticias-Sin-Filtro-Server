@@ -349,10 +349,11 @@
   "pk": 1,
   "fields": {
     "created": "2022-06-10T02:53:12.170Z",
-    "modified": "2022-06-10T02:53:12.170Z",
-    "name": "Korn",
+    "modified": "2022-07-27T00:21:51.346Z",
+    "name": "Servicio de informacion constante",
     "description": "Banda estadounidense de nu-metal de Bakersfield, California, Estados Unidos",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=15y4qTizfabCMrSqFIbm9PyM98TB8bAfE"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=15y4qTizfabCMrSqFIbm9PyM98TB8bAfE",
+    "type": "Podcast"
   }
 },
 {
@@ -363,7 +364,8 @@
     "modified": "2022-06-10T02:53:44.901Z",
     "name": "Linkin Park",
     "description": "Banda estadounidense de rock alternativo procedente de Agoura Hills",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=15l5tRBAfpCUeD0KqCDmzLIY4H7SlaBJV"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=15l5tRBAfpCUeD0KqCDmzLIY4H7SlaBJV",
+    "type": "News"
   }
 },
 {
@@ -371,10 +373,11 @@
   "pk": 3,
   "fields": {
     "created": "2022-06-10T02:54:43.383Z",
-    "modified": "2022-06-10T02:54:43.383Z",
-    "name": "System of a Down",
+    "modified": "2022-07-26T06:56:29.747Z",
+    "name": "Servicio de informacion publica",
     "description": "banda de rock estadounidense de ascendencia armenia, formada en Glendale, California, en el año 1994",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1r9hmZMrJAvZJkSH-Wfvx8zMNzxnUZ_yo"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1r9hmZMrJAvZJkSH-Wfvx8zMNzxnUZ_yo",
+    "type": "News"
   }
 },
 {
@@ -382,10 +385,11 @@
   "pk": 4,
   "fields": {
     "created": "2022-06-10T02:55:10.868Z",
-    "modified": "2022-06-16T18:42:06.355Z",
+    "modified": "2022-07-26T06:37:37.321Z",
     "name": "Crazy Town",
     "description": null,
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1n3qf7eYNxxp0C5VERAZWpxpoIgGF8OJT"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1n3qf7eYNxxp0C5VERAZWpxpoIgGF8OJT",
+    "type": "Podcast"
   }
 },
 {
@@ -393,10 +397,11 @@
   "pk": 5,
   "fields": {
     "created": "2022-06-10T02:55:37.832Z",
-    "modified": "2022-06-10T02:55:37.832Z",
+    "modified": "2022-07-25T21:43:30.229Z",
     "name": "Blink 182",
     "description": "banda estadounidense de pop punk",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1nbtj3rngKeiC563z3a1ATuncYxa9jhsS"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1nbtj3rngKeiC563z3a1ATuncYxa9jhsS",
+    "type": "Podcast"
   }
 },
 {
@@ -404,10 +409,11 @@
   "pk": 6,
   "fields": {
     "created": "2022-06-10T02:56:05.444Z",
-    "modified": "2022-06-10T02:56:05.444Z",
+    "modified": "2022-07-25T21:43:12.200Z",
     "name": "Rammstein",
     "description": "banda alemana de metal industrial formada en 1994",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1IK3Uyd46XgBJgKY_LPyISC7RKuPSoQuz"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1IK3Uyd46XgBJgKY_LPyISC7RKuPSoQuz",
+    "type": "Podcast"
   }
 },
 {
@@ -415,10 +421,11 @@
   "pk": 7,
   "fields": {
     "created": "2022-06-16T16:46:11.221Z",
-    "modified": "2022-06-16T16:47:04.804Z",
+    "modified": "2022-07-25T21:43:07.549Z",
     "name": "Amon Amarth",
     "description": "banda sueca de death metal melódico formada en Tumba, Suecia, en 1992. Su nombre significa «Monte del Destino» en sindarin",
-    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1dEDcp-HOV5OTKe0s3IV22_EPZuTa23me"
+    "thumbnailUrl": "https://drive.google.com/uc?export=view&id=1dEDcp-HOV5OTKe0s3IV22_EPZuTa23me",
+    "type": "Podcast"
   }
 }
 ]
