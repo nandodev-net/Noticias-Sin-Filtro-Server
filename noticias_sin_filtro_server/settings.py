@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from pathlib import Path
+import os
 
 
 import mimetypes
@@ -80,11 +81,18 @@ INSTALLED_APPS = [
     "app.killswitch.apps.KillswitchConfig",
     "app.audio_player.apps.AudioPlayerConfig",
     "app.client_dashboard.apps.ClientDashboardConfig",
+    "app.client_dashboard.users.apps.UsersConfig",
 
     # Third party
+    "crispy_forms",
     "rest_framework",
-    "colorfield"
+    "colorfield",
+    'widget_tweaks',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -149,6 +157,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication
+# --------------------------------------------------
+
+LOGIN_URL = "/dashboard/login"
+
+LOGIN_REDIRECT_URL = "/dashboard"
+
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -165,8 +181,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
