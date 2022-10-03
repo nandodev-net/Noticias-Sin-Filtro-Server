@@ -84,10 +84,10 @@ INSTALLED_APPS = [
     "app.client_dashboard.users.apps.UsersConfig",
 
     # Third party
-    "crispy_forms",
     "rest_framework",
     "colorfield",
     'widget_tweaks',
+    'bootstrap_modal_forms',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

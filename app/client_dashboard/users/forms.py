@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import CustomUser
+from bootstrap_modal_forms.forms import BSModalModelForm
+
 
 
 ROLE_CHOICES = (
@@ -52,16 +54,7 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 
-
-
- 
- 
- 
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
-    phone_no = forms.CharField(max_length = 20)
-    first_name = forms.CharField(max_length = 20)
-    last_name = forms.CharField(max_length = 20)
+class UserModelForm(BSModalModelForm):
     class Meta:
-        model = User
-        fields = ['username', 'email', 'phone_no', 'password1', 'password2']
+        model = CustomUser
+        fields = ['full_name', 'email' , 'news_media', 'is_admin']

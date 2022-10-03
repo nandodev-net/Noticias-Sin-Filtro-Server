@@ -311,6 +311,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-bootstrap-modal-forms"
+version = "2.2.0"
+description = "A Django plugin for creating AJAX driven forms in Bootstrap modal."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=1.8"
+
+[[package]]
 name = "django-colorfield"
 version = "0.6.3"
 description = "simple color field for your models with a nice color-picker in the admin-interface."
@@ -328,6 +339,17 @@ description = "Best way to have Django DRY forms"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "django-datatables-view"
+version = "1.20.0"
+description = "Django datatables view"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=3.0"
 
 [[package]]
 name = "django-environ"
@@ -1029,7 +1051,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2811a4d490e4b916d042da9f2676894afdff400165a41678239f10816ec33a92"
+content-hash = "6f29d49b693f2e373c1681f510691dfae8d7838174b0dd18d7e9ef7578fabf07"
 
 [metadata.files]
 amqp = []
@@ -1054,8 +1076,10 @@ cryptography = []
 cssselect = []
 deprecated = []
 django = []
+django-bootstrap-modal-forms = []
 django-colorfield = []
 django-crispy-forms = []
+django-datatables-view = []
 django-environ = []
 django-filter = []
 django-model-utils = []

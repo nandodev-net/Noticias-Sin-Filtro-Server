@@ -13,12 +13,12 @@
 
     <!-- Favicon icon -->
     <link rel="icon" href="{% static 'img/vesinfiltro.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
 
     <title>{% block tab_title %} NoticiasSinFiltro {% endblock tab_title %}</title>
 
     {% block style %}   
       <link href="{% static 'css/vendor.css' %}" rel="stylesheet" />
-      <link href="{% static 'css/jquery.json-viewer.css' %}" rel="stylesheet" />
     {% endblock style %}
   
     {% block custom_stylesheet %}
@@ -28,6 +28,7 @@
   <body>
 
 
+
     <nav class="pcoded-navbar menu-light ">
       <div class="navbar-wrapper">
         <div class="navbar-content scroll-div" >
@@ -35,11 +36,11 @@
           <ul class="nav pcoded-inner-navbar pt-4">
 
             <li class="nav-item pcoded-menu-caption">
-                <label>Incidents</label>
+                <label></label>
             </li>
             
             <li class="nav-item pcoded-hasmenu">
-                <a href="#" class="nav-link ">
+                <a href="{% url 'dashboard:index' %}" class="nav-link ">
                     <span class="pcoded-micon">
                         <i class="far fa-folder-open"></i>
                     </span>
@@ -47,33 +48,23 @@
                         Audio Files
                     </span>
                 </a>
-                <ul class="pcoded-submenu">
-                    <li><a href="#">List Audios</a></li>
-                    {% if user.is_editor %}
-                    <li><a href="#">New Audio</a></li>
-                    {% endif %}
-                </ul>
             </li>
+
+            <li class="nav-item pcoded-hasmenu">
+              <a href="{% url 'dashboard:authors:authors_data' %}" class="nav-link ">
+                  <span class="pcoded-micon">
+                      <i class="far fa-folder-open"></i>
+                  </span>
+                  <span class="pcoded-mtext">
+                      Authors
+                  </span>
+              </a>
+          </li>
             
             {% if user.is_admin %}
-            <li class="nav-item pcoded-menu-caption">
-                <label>Settings</label>
-            </li>
+
             <li class="nav-item pcoded-hasmenu">
-                <a href="#" class="nav-link ">
-                    <span class="pcoded-micon">
-                        <i class="feather icon-briefcase"></i>
-                    </span>
-                    <span class="pcoded-mtext">
-                        Control Panel
-                    </span>
-                </a>
-                <ul class="pcoded-submenu">
-                    <li><a href="#">Controls</a></li>
-                </ul>
-            </li>
-            <li class="nav-item pcoded-hasmenu">
-                <a href="#" class="nav-link ">
+                <a href="{% url 'dashboard:users_data' %}" class="nav-link ">
                     <span class="pcoded-micon">
                         <i class="feather icon-user"></i>
                     </span>
@@ -81,10 +72,6 @@
                         Users
                     </span>
                 </a>
-                <ul class="pcoded-submenu">
-                    <li><a href="#">List Users</a></li>
-                    <li><a href="#">New User</a></li>
-                </ul>
             </li>
             {% endif %}
           </ul>
@@ -135,19 +122,6 @@
             </div>
           </li>
 
-          <li class=''>
-              <div class="dropdown mr-5">
-                  <select id="tz_selector" class="w-100 custom-select" name="tz_selector">
-                      {% if request.session.system_tz == "1" %}
-                          <option value="1" selected>UTC (0)</option>
-                          <option value="2">Caracas (utc -4)</option>
-                      {% else %}
-                          <option value="1" >UTC (0)</option>
-                          <option value="2" selected>Caracas (utc -4)</option>
-                      {% endif %}
-                  </select>
-              </div>
-          </li>
 
           
           
@@ -198,13 +172,21 @@
 
 
     {% block scripts %}
-        <script src="{% static 'js/vendor-all.min.js' %}"></script>
-        <script src="{% static 'js/plugins/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/plugins/sweetalert.js' %}"></script>
-        <script src="{% static 'js/jquery.json-viewer.js' %}"></script>
+    
+    
+    <script src="{% static 'assets/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+
+
+    
+
 
     {% endblock scripts %}
     {% block custom_scripts %}
+    <script type="text/javascript" src="{% static 'plugins/DataTables/datatables.min.js' %}"></script>
         
     {% endblock custom_scripts %}
   </body>

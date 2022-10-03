@@ -4,16 +4,16 @@
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/DataTables/datatables.min.css' %}" />
 {% endblock custom_stylesheet %}
 
-{% block tab_title %} NoticiasSinFiltro - Audio Files {% endblock tab_title %}
-{% block title %} Audio Files {% endblock title %}
-{% block sub_title %} List of all available audio files {% endblock sub_title %}
+{% block tab_title %} NoticiasSinFiltro - Authors {% endblock tab_title %}
+{% block title %} Authors {% endblock title %}
+{% block sub_title %} List of all available authors {% endblock sub_title %}
 
 {% block route %}
 <li class="breadcrumb-item">
     <a href="{% url 'dashboard:index' %}"><i class="feather icon-home"></i></a>
 </li>
 <li class="breadcrumb-item active">
-    <a href="{% url 'dashboard:index' %}"><strong>Audio Files</strong></a>
+    <a href="{% url 'dashboard:users_data' %}"><strong>Authors</strong></a>
 </li>
 {% endblock route %}
 
@@ -27,40 +27,19 @@
 
 
                 <div class="col-6">
+                    <input id="name"
+                        class="form-control mr-2 additional-filter border-top-0 border-left-0 border-right-0 bg-transparent text-primary"
+                        type="search" placeholder="Name" aria-label="Search name" value="{{ prefill.name }}"
+                        name="name" />
+                </div>
+
+                <div class="col-6">
                     <input id="title"
                         class="form-control mr-2 additional-filter border-top-0 border-left-0 border-right-0 bg-transparent text-primary"
-                        type="search" placeholder="Title" aria-label="Search title" value="{{ prefill.title }}"
-                        name="title" />
+                        type="search" placeholder="Type" aria-label="Search type" value="{{ prefill.type }}"
+                        name="type" />
                 </div>
 
-                <div class="col-3">
-                    <div class="row align-items-center">
-                        <div class="col-4 mx-auto">
-                            <label class='font-weight-bold '>
-                                Start Date
-                            </label>
-                        </div>
-                        <div class="col-8 mx-auto">
-                            <input id="start_date" class="text-secondary form-control mr-2 additional-filter"
-                                type="date" value="{{ prefill.start_date }}" name="start_date" />
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-3">
-                    <div class="row align-items-center ml-1">
-                        <div class="col-4 mx-auto">
-                            <label class='font-weight-bold'>
-                                End Date
-                            </label>
-                        </div>
-                        <div class="col-8 mx-auto">
-                            <input id="end_date" class="text-secondary form-control mr-2 additional-filter" type="date"
-                                value="{{ prefill.end_date }}" name="end_date" />
-                        </div>
-                    </div>
-                </div>
 
 
                 <div class="col-12">
@@ -104,10 +83,10 @@
 
 <div class="col-12">
     <button type="button" class="btn btn-dark rounded ml-1 mb-4" id="deleteFileBtn">
-        <i class="fas fa-info mr-1"></i> Delete Audio Files
+        <i class="fas fa-info mr-1"></i> Delete Authors
     </button>
     <button type="button" class="btn btn-dark rounded ml-1 mb-4" id="createFileBtn">
-        <i class="fas fa-info mr-1"></i> Create Audio File
+        <i class="fas fa-info mr-1"></i> Create Author
     </button>
 </div>
 
@@ -117,13 +96,10 @@
         <thead>
             <tr>
                 <th class="text-center" scope="col"> </th>
-                <th class="text-center" scope="col">Date</th>
-                <th class="text-center" scope="col">Title</th>
-                <th class="text-center" scope="col">Audio</th>
-                <th class="text-center" scope="col">Votes</th>
-                <th class="text-center" scope="col">Listens</th>
-
-                {% if user.is_editor %}
+                <th class="text-center" scope="col">Image</th>
+                <th class="text-center" scope="col">Name</th>
+                <th class="text-center" scope="col">Type</th>
+                {% if user.is_admin %}
                 <th class="text-center" scope="col">Actions</th>
                 {% endif %}
             </tr>
@@ -147,7 +123,7 @@
 <script type="text/javascript">
 
     $("#createFileBtn").modalForm({
-        formURL: "{% url 'dashboard:audios:audio_create' %}"
+        formURL: '{% url "dashboard:authors:author_create" %}'
     });
 
 
@@ -167,10 +143,9 @@
     $("#urlForm").on("submit", function (event) {
         event.preventDefault();
         let data = {
-            title: $("#title").val(), start_date: $("#start_date").val(),
-            end_date: $("#end_date").val(),
+            title: $("#title").val(),
         };
-        let urlSearch = "{% url 'dashboard:audios:audios_data' %}";
+        let urlSearch = "#";
         let url = urlSearch + "?" + $.param(data);
         window.location.href = url;
 
@@ -238,12 +213,11 @@
             serverSide: true,
             rowId: "id",
             ajax: {
-                url: '{% url "dashboard:audios:list_audios" %}',
+                url: '{% url "dashboard:authors:list_authors" %}',
                 data: function (data) {
-                    data.date = $("#date").val();
-                    data.title = $("#title").val();
-                    data.votes = $("#votes").val();
-                    data.listens = $('#listen_count').val();
+                    data.thumbnailUrl = $("#thumbnailUrl").val();
+                    data.name = $("#name").val();
+                    data.type = $("#type").val();
                 },
                 contentType: "application/json; charset=utf-8",
                 type: "GET",
@@ -262,39 +236,22 @@
                     }
                 },
                 {
-                    data: "date",
-                    orderable: true,
-                    searchable: true,
-                },
-                {
-                    data: "title",
+                    data: "thumbnailUrl",
                     orderable: true,
                     searchable: true,
                     render: function (data, type, row, meta) {
-                        return `<div class='wrapper-dt'> ${data} </div>`
-                    }
-                },
-                {
-                    data: "audioUrl",
-                    orderable: false,
-                    searchable: false,
-                    render: function (data, type, row, meta) {
-                        return `
-                        <audio controls>
-                            <source src=${data} type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
                         
-                        `
-                    }
+                            return `<img src="${data}"  width="50">`
+
+                    },
                 },
                 {
-                    data: "votes",
+                    data: "name",
                     orderable: true,
                     searchable: true,
                 },
                 {
-                    data: "listen_count",
+                    data: "type",
                     orderable: true,
                     searchable: true,
                 },
@@ -304,9 +261,9 @@
                     orderable: false,
                     searchable: false,
                     render: function (data, type, row, meta) {
-                        var url0 = "{% url 'dashboard:audios:audio_read' pk=1 %}".replace(1, row.id);
-                        var url1 = "{% url 'dashboard:audios:audio_update' pk=1 %}".replace(1, row.id);
-                        var url2 = "{% url 'dashboard:audios:audio_delete' pk=1 %}".replace(1, row.id);
+                        var url0 = "{% url 'dashboard:authors:author_read' pk=1 %}".replace(1, row.id);
+                        var url1 = "#".replace(1, row.id);
+                        var url2 = "{% url 'dashboard:authors:author_delete' pk=1 %}".replace(1, row.id);
                         var rowId = row.id;
 
 

@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext as _
 
-
-
 from .managers import CustomUserManager
 from app.audio_player.models import Author
 
@@ -28,11 +26,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     is_editor = models.BooleanField(
-        default=False
+        default=True
     )
 
     is_staff = models.BooleanField(
-        default=False
+        default=True
     )
 
     is_active = models.BooleanField(
