@@ -9,6 +9,7 @@ class AudioSerializer(serializers.Serializer):
     author = serializers.CharField(read_only=True)
     author_id = serializers.IntegerField(read_only=True)
     author_description = serializers.CharField(read_only=True)
+    author_followers = serializers.CharField(read_only=True)
     author_type = serializers.CharField(read_only=True)
     thumbnailUrl = serializers.CharField(read_only=True)
     audioUrl = serializers.CharField(read_only=True)

@@ -15,6 +15,7 @@ class Author(TimeStampedModel):
     description = models.CharField(max_length=500, blank= True, null= True)
     thumbnailUrl = models.CharField(max_length=200, blank= True, null= True)
     type = models.CharField(choices=AUTH_TYPE, max_length=TYPE_MAXLENGTH, default=AUTH_NEWS)
+    followers = models.IntegerField(default=0)
     
 
     def __str__(self):

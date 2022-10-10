@@ -2,7 +2,16 @@ from django.db import models
 import datetime as dt
 from model_utils.models import TimeStampedModel
 from .author import Author
+from mutagen.mp3 import MP3
+from urllib.request  import urlretrieve
 
+def getDuration(audio_url):
+    filename, headers = urlretrieve(audio_url)
+    audio = MP3(filename)
+    audio_info = audio.info
+    print(audio_info)
+    return dt.timedelta(seconds=int(audio_info.length))
+     
 
 # Create your models here.
 class Audio(TimeStampedModel):
@@ -13,6 +22,10 @@ class Audio(TimeStampedModel):
     author = models.ForeignKey(Author, related_name='audios' , on_delete=models.CASCADE)
     audioUrl = models.CharField(max_length=200, blank= True, null= True)
     date = models.DateTimeField(null = True, blank = True)
+
+    def save(self, *args, **kwargs):
+        self.duration = getDuration(self.audioUrl)
+        super(Audio, self).save(*args, **kwargs)
 
     def __str__(self):
         return '({})- {} - {}'.format(
