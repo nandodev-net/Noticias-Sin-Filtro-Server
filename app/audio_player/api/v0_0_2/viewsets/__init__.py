@@ -8,6 +8,10 @@ from .player_screen import (
     VotedAudioCounterApiView,
     AudioListenCounterApiView,
     )
+from .author_preferences import (
+    AudioVoteApiView,
+    AuthorFollowApiView,
+)
 
 __all__ = [
     MainScreenApiView,
@@ -16,4 +20,6 @@ __all__ = [
     AuthorSuggestionsApiView,
     VotedAudioCounterApiView,
     AudioListenCounterApiView,
+    AudioVoteApiView,
+    AuthorFollowApiView,
 ]
