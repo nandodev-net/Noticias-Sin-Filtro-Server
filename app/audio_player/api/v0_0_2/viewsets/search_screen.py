@@ -1,27 +1,26 @@
 from django.db.models import Q
-from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import generics
-from rest_framework.status import (
-    HTTP_200_OK,
-    HTTP_204_NO_CONTENT,
-    )
-from ..serializers import AudioSerializer, AuthorSuggestionsSerializer
-from app.audio_player.models import Audio, Author
-from .utils import build_audio_obj
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT
 
+from app.audio_player.models import Audio, Author
 from app.core.pagination import VIPagination
+
+from ..serializers import AudioSerializer, AuthorSuggestionsSerializer
+from .utils import build_audio_obj
 
 
 class SearchResultsScreenApiView(generics.GenericAPIView):
-    http_method_names = [u'get']
+    http_method_names = ["get"]
     serializer_class = AudioSerializer
     queryset = Audio.objects.all()
 
     def get_object(self, pk):
         try:
-            return Audio.objects.filter(Q(title__icontains=pk.lower()) | \
-                Q(author__name__icontains=pk.lower()))
+            return Audio.objects.filter(
+                Q(title__icontains=pk.lower()) | Q(author__name__icontains=pk.lower())
+            )
         except Audio.DoesNotExist:
             raise Http404
 
@@ -29,11 +28,11 @@ class SearchResultsScreenApiView(generics.GenericAPIView):
         paginator = VIPagination()
         paginator.page_size = 10
 
-        #author = self.get_queryset(self.kwargs['id'])
+        # author = self.get_queryset(self.kwargs['id'])
         audios_ = self.get_object(pk)
         audios = [build_audio_obj(audio_obj) for audio_obj in audios_]
 
-        if len(audios)>0:
+        if len(audios) > 0:
             result_page = paginator.paginate_queryset(audios, request)
             author_screen_json = AudioSerializer(result_page, many=True)
         else:
@@ -44,10 +43,10 @@ class SearchResultsScreenApiView(generics.GenericAPIView):
         except:
             return Response(status=HTTP_204_NO_CONTENT)
 
-    
+
 class AuthorSuggestionsApiView(generics.GenericAPIView):
     queryset = Author.objects.exclude(audios__isnull=True)
-    http_method_names = [u'get']
+    http_method_names = ["get"]
     serializer_class = AuthorSuggestionsSerializer
 
     def get(self, request, *args, **kwargs):

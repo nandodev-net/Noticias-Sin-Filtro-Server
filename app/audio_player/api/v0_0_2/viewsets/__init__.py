@@ -1,17 +1,8 @@
-from .main_screen import MainScreenApiView
+from .author_preferences import AudioVoteApiView, AuthorFollowApiView
 from .author_screen import AuthorScreenApiView
-from .search_screen import (
-    SearchResultsScreenApiView, 
-    AuthorSuggestionsApiView
-    )
-from .player_screen import (
-    VotedAudioCounterApiView,
-    AudioListenCounterApiView,
-    )
-from .author_preferences import (
-    AudioVoteApiView,
-    AuthorFollowApiView,
-)
+from .main_screen import MainScreenApiView
+from .player_screen import AudioListenCounterApiView, VotedAudioCounterApiView
+from .search_screen import AuthorSuggestionsApiView, SearchResultsScreenApiView
 
 __all__ = [
     MainScreenApiView,

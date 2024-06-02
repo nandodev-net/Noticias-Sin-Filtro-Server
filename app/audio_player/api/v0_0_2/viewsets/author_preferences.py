@@ -1,16 +1,15 @@
-from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import generics
-from rest_framework.status import (
-    HTTP_200_OK,
-    HTTP_204_NO_CONTENT,
-    )
-from app.audio_player.models import Author, Audio
-from ..serializers import AuthorSerializer, AudioSerializer
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT
+
+from app.audio_player.models import Audio, Author
+
+from ..serializers import AudioSerializer, AuthorSerializer
 
 
 class AuthorFollowApiView(generics.GenericAPIView):
-    http_method_names = [u'get']
+    http_method_names = ["get"]
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
 
@@ -35,7 +34,7 @@ class AuthorFollowApiView(generics.GenericAPIView):
 
 
 class AudioVoteApiView(generics.GenericAPIView):
-    http_method_names = [u'get']
+    http_method_names = ["get"]
     serializer_class = AudioSerializer
     queryset = Audio.objects.all()
 

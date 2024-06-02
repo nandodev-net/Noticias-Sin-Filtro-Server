@@ -1,13 +1,6 @@
-from .audio import (
-    AudioSerializer,
-    MainScreenSerializer,
-    AuthorScreenSerializer,
-
-    )
-from .author import (
-    AuthorSerializer, 
-    AuthorSuggestionsSerializer,
-    )
+from .audio import (AudioSerializer, AuthorScreenSerializer,
+                    MainScreenSerializer)
+from .author import AuthorSerializer, AuthorSuggestionsSerializer
 
 __all__ = [
     AudioSerializer,

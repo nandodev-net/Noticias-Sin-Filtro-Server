@@ -1,6 +1,5 @@
-from .author import Author
 from .audio import Audio
-
+from .author import Author
 
 __all__ = [
     Author,
